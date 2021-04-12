@@ -13,6 +13,7 @@ namespace Mnemox.Logs.BL.FileLogs
             _configuration = configuration;
         }
 
+        
         public Task Error(ErrorLogStructure errorLogStructure)
         {
             throw new System.NotImplementedException();
