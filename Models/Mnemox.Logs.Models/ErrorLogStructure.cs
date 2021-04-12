@@ -12,10 +12,5 @@ namespace Mnemox.Logs.Models
         {
             _exception = exception;
         }
-
-        public void WithErrorSource()
-        {
-
-        }
     }
 }
