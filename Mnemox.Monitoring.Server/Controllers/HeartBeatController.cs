@@ -40,7 +40,7 @@ namespace Mnemox.Monitoring.Server.Controllers
             }
             catch (Exception ex)
             {
-                await _logsManager.Error(new ErrorLogStructure(ex));
+                await _logsManager.ErrorAsync(new ErrorLogStructure(ex));
 
                 return InternalServerErrorResult();
             }

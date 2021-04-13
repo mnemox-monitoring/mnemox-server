@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace Mnemox.Logs.Models
 {
@@ -6,11 +7,16 @@ namespace Mnemox.Logs.Models
     {
         private readonly Exception _exception;
 
-        public string ErrorSource { get; set; }
+        private string _errorSource;
 
         public ErrorLogStructure(Exception exception)
         {
             _exception = exception;
+        }
+
+        public void WithErrorSource([CallerMemberName] string callerMemberName = null)
+        {
+
         }
     }
 }

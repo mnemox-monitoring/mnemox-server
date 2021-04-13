@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj" />
+    <ProjectReference Include="..\..\Models\Mnemox.Logs.Models\Mnemox.Logs.Models.csproj" />
+    <ProjectReference Include="..\..\Models\Mnemox.Timescale.Models\Mnemox.Timescale.Models.csproj" />
   </ItemGroup>
 
 </Project>

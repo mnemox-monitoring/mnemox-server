@@ -4,9 +4,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
+using Mnemox.HeartBeat.Models;
 using Mnemox.Logs.Helpers.FileLogs;
 using Mnemox.Logs.Models;
 using Mnemox.Logs.Models.FilesLogs;
+using Mnemox.Timescale.DM;
 using System.IO;
 
 namespace Mnemox.Monitoring.Server
@@ -48,6 +50,8 @@ namespace Mnemox.Monitoring.Server
             var filesLogsManager = new FilesLogsManager(new FilesLogsConfiguration { });
 
             services.AddTransient<ILogsManager>(s => filesLogsManager);
+
+            services.AddTransient<IHeartBeatDataManager, HeartBeatDataManagerTs>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
