@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mnemox.Monitoring.Server</name>
+    </assembly>
+    <members>
+        <member name="M:Mnemox.Monitoring.Server.Controllers.HeartBeatController.Index(Mnemox.HeartBeat.Models.HeartBeatRequest)">
+            <summary>
+            Inserts heart beat
+            </summary>
+            <remarks>
+            ### Json Properties
+            - machine_details -> optional
+            - metrics -> optional
+            </remarks>
+            <param name="heartBeatRequest"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
