@@ -2,6 +2,7 @@
 using Mnemox.HeartBeat.Models;
 using Mnemox.Logs.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace Mnemox.Monitoring.Server.Controllers
 {
@@ -11,9 +12,13 @@ namespace Mnemox.Monitoring.Server.Controllers
     {
         private readonly ILogsManager _logsManager;
 
-        public HeartBeatController(ILogsManager logsManager)
+        private readonly IHeartBeatDataManager _heartBeatDataManager;
+
+        public HeartBeatController(ILogsManager logsManager, IHeartBeatDataManager heartBeatDataManager)
         {
             _logsManager = logsManager;
+
+            _heartBeatDataManager = heartBeatDataManager;
         }
 
         /// <summary>
@@ -27,15 +32,15 @@ namespace Mnemox.Monitoring.Server.Controllers
         /// <param name="heartBeatRequest"></param>
         /// <returns></returns>
         [HttpPost]
-        public IActionResult Index([FromBody]HeartBeatRequest heartBeatRequest)
+        public async Task<IActionResult> Index([FromBody]HeartBeatRequest heartBeatRequest)
         {
             try
             {
-
+                await _heartBeatDataManager.StoreHeartBeat(heartBeatRequest);
             }
             catch (Exception ex)
             {
-                _logsManager.Error(new ErrorLogStructure(ex));
+                await _logsManager.Error(new ErrorLogStructure(ex));
 
                 return InternalServerErrorResult();
             }

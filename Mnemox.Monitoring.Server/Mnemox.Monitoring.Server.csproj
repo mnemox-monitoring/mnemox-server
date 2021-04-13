@@ -27,7 +27,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\BL\Mnemox.Logs\Mnemox.Logs.BL.csproj" />
+    <ProjectReference Include="..\BL\Mnemox.Logs\Mnemox.Logs.Helpers.csproj" />
     <ProjectReference Include="..\Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj" />
   </ItemGroup>
 
