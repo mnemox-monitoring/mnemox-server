@@ -25,7 +25,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Shared.Models", "Mod
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataManagers", "DataManagers", "{A0C3C9D8-21B5-4418-878B-C2FA0B490782}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Timescale.DM", "DataManagers\Mnemox.Timescale.DM\Mnemox.Timescale.DM.csproj", "{864461DF-FB18-424B-8594-D0B0F7228C7D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Timescale.DM", "DataManagers\Mnemox.Timescale.DM\Mnemox.Timescale.DM.csproj", "{864461DF-FB18-424B-8594-D0B0F7228C7D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Timescale.Models", "Models\Mnemox.Timescale.Models\Mnemox.Timescale.Models.csproj", "{4308C4F3-F983-437A-8368-F86A39BBBD91}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +59,10 @@ Global
 		{864461DF-FB18-424B-8594-D0B0F7228C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{864461DF-FB18-424B-8594-D0B0F7228C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{864461DF-FB18-424B-8594-D0B0F7228C7D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4308C4F3-F983-437A-8368-F86A39BBBD91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4308C4F3-F983-437A-8368-F86A39BBBD91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4308C4F3-F983-437A-8368-F86A39BBBD91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4308C4F3-F983-437A-8368-F86A39BBBD91}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{BF563442-7660-43D9-82AB-5E5783D48F60} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 		{4FF1D3AC-74FA-4610-977F-9BD753D02F87} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 		{864461DF-FB18-424B-8594-D0B0F7228C7D} = {A0C3C9D8-21B5-4418-878B-C2FA0B490782}
+		{4308C4F3-F983-437A-8368-F86A39BBBD91} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA48D926-96AE-428E-8E1C-F85A185D05CD}

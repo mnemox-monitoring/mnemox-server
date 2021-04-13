@@ -5,6 +5,6 @@ namespace Mnemox.Logs.Models
 {
     public interface ILogsManager
     {
-        Task Error(ErrorLogStructure errorLogStructure);
+        Task ErrorAsync(ErrorLogStructure errorLogStructure);
     }
 }

@@ -28,6 +28,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BL\Mnemox.Logs\Mnemox.Logs.Helpers.csproj" />
+    <ProjectReference Include="..\DataManagers\Mnemox.Timescale.DM\Mnemox.Timescale.DM.csproj" />
+    <ProjectReference Include="..\Helpers\Mnemox.Logs\Mnemox.Logs.Helpers.csproj" />
     <ProjectReference Include="..\Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj" />
   </ItemGroup>
 
