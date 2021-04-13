@@ -11,17 +11,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Monitoring.Server", "Mnemox.Monitoring.Server\Mnemox.Monitoring.Server.csproj", "{AC08C8B9-1D01-48DC-B2D1-A4EE3D962CE0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "BL", "BL", "{CA1F9F1B-CC80-430D-A126-2CE594082CE0}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Helpers", "Helpers", "{CA1F9F1B-CC80-430D-A126-2CE594082CE0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Logs.BL", "BL\Mnemox.Logs\Mnemox.Logs.BL.csproj", "{FEFD4C0B-E7B7-4FE3-A572-8FB453D8A946}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Logs.Helpers", "Helpers\Mnemox.Logs\Mnemox.Logs.Helpers.csproj", "{FEFD4C0B-E7B7-4FE3-A572-8FB453D8A946}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Logs.Models", "Models\Mnemox.Logs.Models\Mnemox.Logs.Models.csproj", "{656FA2CD-11D1-456B-9267-71E72300A2D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.HeartBeat.Models", "Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj", "{BF563442-7660-43D9-82AB-5E5783D48F60}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.HeartBeat.Models", "Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj", "{BF563442-7660-43D9-82AB-5E5783D48F60}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Shared.Models", "Models\Mnemox.Shared.Models\Mnemox.Shared.Models.csproj", "{4FF1D3AC-74FA-4610-977F-9BD753D02F87}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Shared.Models", "Models\Mnemox.Shared.Models\Mnemox.Shared.Models.csproj", "{4FF1D3AC-74FA-4610-977F-9BD753D02F87}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataManagers", "DataManagers", "{A0C3C9D8-21B5-4418-878B-C2FA0B490782}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Timescale.DM", "DataManagers\Mnemox.Timescale.DM\Mnemox.Timescale.DM.csproj", "{864461DF-FB18-424B-8594-D0B0F7228C7D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,6 +53,10 @@ Global
 		{4FF1D3AC-74FA-4610-977F-9BD753D02F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FF1D3AC-74FA-4610-977F-9BD753D02F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4FF1D3AC-74FA-4610-977F-9BD753D02F87}.Release|Any CPU.Build.0 = Release|Any CPU
+		{864461DF-FB18-424B-8594-D0B0F7228C7D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{864461DF-FB18-424B-8594-D0B0F7228C7D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{864461DF-FB18-424B-8594-D0B0F7228C7D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{864461DF-FB18-424B-8594-D0B0F7228C7D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -58,6 +66,7 @@ Global
 		{656FA2CD-11D1-456B-9267-71E72300A2D6} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 		{BF563442-7660-43D9-82AB-5E5783D48F60} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 		{4FF1D3AC-74FA-4610-977F-9BD753D02F87} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
+		{864461DF-FB18-424B-8594-D0B0F7228C7D} = {A0C3C9D8-21B5-4418-878B-C2FA0B490782}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA48D926-96AE-428E-8E1C-F85A185D05CD}

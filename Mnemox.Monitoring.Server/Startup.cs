@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.PlatformAbstractions;
 using Microsoft.OpenApi.Models;
-using Mnemox.Logs.BL.FileLogs;
+using Mnemox.Logs.Helpers.FileLogs;
 using Mnemox.Logs.Models;
 using Mnemox.Logs.Models.FilesLogs;
 using System.IO;
