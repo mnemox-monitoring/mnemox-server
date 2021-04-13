@@ -19,6 +19,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Models", "Models", "{DA28FA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Logs.Models", "Models\Mnemox.Logs.Models\Mnemox.Logs.Models.csproj", "{656FA2CD-11D1-456B-9267-71E72300A2D6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.HeartBeat.Models", "Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj", "{BF563442-7660-43D9-82AB-5E5783D48F60}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Shared.Models", "Models\Mnemox.Shared.Models\Mnemox.Shared.Models.csproj", "{4FF1D3AC-74FA-4610-977F-9BD753D02F87}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -37,6 +41,14 @@ Global
 		{656FA2CD-11D1-456B-9267-71E72300A2D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{656FA2CD-11D1-456B-9267-71E72300A2D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{656FA2CD-11D1-456B-9267-71E72300A2D6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BF563442-7660-43D9-82AB-5E5783D48F60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BF563442-7660-43D9-82AB-5E5783D48F60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BF563442-7660-43D9-82AB-5E5783D48F60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BF563442-7660-43D9-82AB-5E5783D48F60}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4FF1D3AC-74FA-4610-977F-9BD753D02F87}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4FF1D3AC-74FA-4610-977F-9BD753D02F87}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4FF1D3AC-74FA-4610-977F-9BD753D02F87}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4FF1D3AC-74FA-4610-977F-9BD753D02F87}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -44,6 +56,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FEFD4C0B-E7B7-4FE3-A572-8FB453D8A946} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
 		{656FA2CD-11D1-456B-9267-71E72300A2D6} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
+		{BF563442-7660-43D9-82AB-5E5783D48F60} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
+		{4FF1D3AC-74FA-4610-977F-9BD753D02F87} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA48D926-96AE-428E-8E1C-F85A185D05CD}
