@@ -4,7 +4,7 @@
         <name>Mnemox.Monitoring.Server</name>
     </assembly>
     <members>
-        <member name="M:Mnemox.Monitoring.Server.Controllers.HeartBeatController.Index(Mnemox.HeartBeat.Models.HeartBeatRequest)">
+        <member name="M:Mnemox.Monitoring.Server.Controllers.HeartBeatController.StoreHeartBeat(Mnemox.HeartBeat.Models.HeartBeatRequest)">
             <summary>
             Inserts heart beat
             </summary>

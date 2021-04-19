@@ -33,7 +33,7 @@ namespace Mnemox.Monitoring.Server.Controllers
         /// <param name="heartBeatRequest"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Index([FromBody]HeartBeatRequest heartBeatRequest)
+        public async Task<IActionResult> StoreHeartBeat([FromBody]HeartBeatRequest heartBeatRequest)
         {
             try
             {
