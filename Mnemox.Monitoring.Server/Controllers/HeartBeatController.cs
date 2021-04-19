@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mnemox.HeartBeat.Models;
 using Mnemox.Logs.Models;
+using Mnemox.Shared.Models;
 using System;
 using System.Threading.Tasks;
 
@@ -38,9 +39,13 @@ namespace Mnemox.Monitoring.Server.Controllers
             {
                 await _heartBeatDataManager.StoreHeartBeat(heartBeatRequest);
             }
+            catch (HandledException)
+            {
+                return InternalServerErrorResult();
+            }
             catch (Exception ex)
             {
-                await _logsManager.ErrorAsync(new ErrorLogStructure(ex));
+                await _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
 
                 return InternalServerErrorResult();
             }

@@ -1,5 +1,6 @@
 ﻿using Mnemox.HeartBeat.Models;
 using Mnemox.Logs.Models;
+using Mnemox.Shared.Models;
 using Mnemox.Timescale.DM.Dal;
 using Npgsql;
 using NpgsqlTypes;
@@ -50,9 +51,9 @@ namespace Mnemox.Timescale.DM
             }
             catch(Exception ex)
             {
-                await _logsManager.ErrorAsync(new ErrorLogStructure(ex));
+                await _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
 
-                throw;
+                throw new HandledException(ex);
             }
             finally
             {

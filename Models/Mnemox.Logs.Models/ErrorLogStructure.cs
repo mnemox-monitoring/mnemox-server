@@ -14,9 +14,11 @@ namespace Mnemox.Logs.Models
             _exception = exception;
         }
 
-        public void WithErrorSource([CallerMemberName] string callerMemberName = null)
+        public ErrorLogStructure WithErrorSource([CallerMemberName] string callerMemberName = null)
         {
             _errorSource = callerMemberName;
+
+            return this;
         }
     }
 }
