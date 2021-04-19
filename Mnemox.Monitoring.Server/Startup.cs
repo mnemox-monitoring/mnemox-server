@@ -8,8 +8,8 @@ using Mnemox.HeartBeat.Models;
 using Mnemox.Logs.Helpers.FileLogs;
 using Mnemox.Logs.Models;
 using Mnemox.Logs.Models.FilesLogs;
-using Mnemox.Timescale.DM;
 using Mnemox.Timescale.DM.Dal;
+using Mnemox.Timescale.DM.HeartBeat;
 using Mnemox.Timescale.Models;
 using System.IO;
 

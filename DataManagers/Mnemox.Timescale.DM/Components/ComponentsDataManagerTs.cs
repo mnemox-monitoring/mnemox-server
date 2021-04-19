@@ -1,33 +1,27 @@
-﻿using Mnemox.HeartBeat.Models;
+﻿using Mnemox.Components.Models;
 using Mnemox.Logs.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Timescale.DM.Dal;
-using Npgsql;
-using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Mnemox.Timescale.DM
+namespace Mnemox.Timescale.DM.Components
 {
-    public class HeartBeatDataManagerTs : IHeartBeatDataManager
+    public class ComponentsDataManagerTs : IComponentsDataManager
     {
-        private readonly IDbFactory _dbFactory;
-
         private readonly ILogsManager _logsManager;
 
-        private const string INSTANCE_ID_PARAMETER_NAME = "p_instance_id";
+        private readonly IDbFactory _dbFactory;
 
-        private const string ADD_HEART_BEAT_FUNCTION_NAME = "monitoring.heart_beats_add";
-
-        public HeartBeatDataManagerTs(IDbFactory dbFactory, ILogsManager logsManager)
+        public ComponentsDataManagerTs(ILogsManager logsManager, IDbFactory dbFactory)
         {
-            _dbFactory = dbFactory;
-
             _logsManager = logsManager;
+
+            _dbFactory = dbFactory;
         }
 
-        public async Task StoreHeartBeat(HeartBeatRequest heartBeatRequest)
+        public async Task AddComponents(ComponentBaseModel component)
         {
             IDbBase dbBase = null;
 
@@ -39,17 +33,17 @@ namespace Mnemox.Timescale.DM
                 {
                     new TimescaleParameter
                     {
-                        NpgsqlValue = heartBeatRequest.InstanceId,
-                        ParameterName = INSTANCE_ID_PARAMETER_NAME,
-                        NpgsqlDbType = NpgsqlDbType.Bigint
+                        //NpgsqlValue = heartBeatRequest.InstanceId,
+                        //ParameterName = INSTANCE_ID_PARAMETER_NAME,
+                        //NpgsqlDbType = NpgsqlDbType.Bigint
                     }
                 };
 
                 await dbBase.ConnectAsync();
 
-                await dbBase.ExecuteNonQueryAsync(ADD_HEART_BEAT_FUNCTION_NAME, parameters);
+                //await dbBase.ExecuteNonQueryAsync(ADD_HEART_BEAT_FUNCTION_NAME, parameters);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
 
