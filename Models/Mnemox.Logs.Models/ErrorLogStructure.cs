@@ -16,7 +16,7 @@ namespace Mnemox.Logs.Models
 
         public void WithErrorSource([CallerMemberName] string callerMemberName = null)
         {
-
+            _errorSource = callerMemberName;
         }
     }
 }

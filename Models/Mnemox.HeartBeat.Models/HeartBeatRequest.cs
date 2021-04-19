@@ -7,7 +7,7 @@ namespace Mnemox.HeartBeat.Models
     public class HeartBeatRequest
     {
         [JsonPropertyName("instance_id")]
-        public string InstanceId { get; set; }
+        public long InstanceId { get; set; }
 
         /// <summary>
         /// Optional parameter
