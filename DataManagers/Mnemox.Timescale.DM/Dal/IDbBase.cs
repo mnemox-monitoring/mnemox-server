@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Data.Common;
+using System.Threading.Tasks;
 
 namespace Mnemox.Timescale.DM.Dal
 {
@@ -6,5 +8,7 @@ namespace Mnemox.Timescale.DM.Dal
     {
         Task ConnectAsync();
         Task DisconnectAsync();
+        Task ExecuteNonQueryAsync(string command, List<TimescaleParameter> parameters = null);
+        Task<DbDataReader> ExecuteReaderAsync(string command, List<TimescaleParameter> parameters = null);
     }
 }

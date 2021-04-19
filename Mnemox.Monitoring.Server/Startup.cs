@@ -9,6 +9,8 @@ using Mnemox.Logs.Helpers.FileLogs;
 using Mnemox.Logs.Models;
 using Mnemox.Logs.Models.FilesLogs;
 using Mnemox.Timescale.DM;
+using Mnemox.Timescale.DM.Dal;
+using Mnemox.Timescale.Models;
 using System.IO;
 
 namespace Mnemox.Monitoring.Server
@@ -50,6 +52,19 @@ namespace Mnemox.Monitoring.Server
             var filesLogsManager = new FilesLogsManager(new FilesLogsConfiguration { });
 
             services.AddTransient<ILogsManager>(s => filesLogsManager);
+
+            SetHeartBeatDataManagerTs(services);
+        }
+
+        private void SetHeartBeatDataManagerTs(IServiceCollection services)
+        {
+            const string TIMESCALEDB_FACTORY_SETTINGS_SECTION_NAME = "TimescaleDbFactorySettings";
+
+            var dbFactorySettings = new DbFactorySettings();
+
+            Configuration.GetSection(TIMESCALEDB_FACTORY_SETTINGS_SECTION_NAME).Bind(dbFactorySettings);
+
+            services.AddTransient<IDbFactory>(c => new TimescaleDbFactory(dbFactorySettings));
 
             services.AddTransient<IHeartBeatDataManager, HeartBeatDataManagerTs>();
         }

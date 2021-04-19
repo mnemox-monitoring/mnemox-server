@@ -2,6 +2,6 @@
 {
     public interface IDbFactory
     {
-        DbBase GetDbBase();
+        IDbBase GetDbBase();
     }
 }

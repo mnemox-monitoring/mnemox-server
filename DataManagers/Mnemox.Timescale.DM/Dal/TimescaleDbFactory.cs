@@ -2,16 +2,16 @@
 
 namespace Mnemox.Timescale.DM.Dal
 {
-    public class DbFactory : IDbFactory
+    public class TimescaleDbFactory : IDbFactory
     {
         private readonly DbFactorySettings _factorySettings;
 
-        public DbFactory(DbFactorySettings factorySettings)
+        public TimescaleDbFactory(DbFactorySettings factorySettings)
         {
             _factorySettings = factorySettings;
         }
 
-        public DbBase GetDbBase()
+        public IDbBase GetDbBase()
         {
             return new DbBase(_factorySettings.ConnectionString);
         }

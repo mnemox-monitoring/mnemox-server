@@ -1,8 +1,7 @@
 ﻿using Npgsql;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System.Data;
+using System.Data.Common;
 using System.Threading.Tasks;
 
 namespace Mnemox.Timescale.DM.Dal
@@ -28,6 +27,36 @@ namespace Mnemox.Timescale.DM.Dal
         public async Task DisconnectAsync()
         {
             await _connection?.CloseAsync();
+        }
+
+        public async Task<DbDataReader> ExecuteReaderAsync(string command, List<TimescaleParameter> parameters = null)
+        {
+            DbDataReader reader = null;
+
+            using (var cmd = new NpgsqlCommand(command, _connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            })
+            {
+                if (parameters != null && parameters.Count > 0) cmd.Parameters.AddRange(parameters.ToArray());
+
+                reader = await cmd.ExecuteReaderAsync();
+            }
+
+            return reader;
+        }
+
+        public async Task ExecuteNonQueryAsync(string command, List<TimescaleParameter> parameters = null)
+        {
+            using (var cmd = new NpgsqlCommand(command, _connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            })
+            {
+                if (parameters != null && parameters.Count > 0) cmd.Parameters.AddRange(parameters.ToArray());
+
+                await cmd.ExecuteNonQueryAsync();
+            }
         }
     }
 }
