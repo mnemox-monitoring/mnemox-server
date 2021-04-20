@@ -11,7 +11,6 @@ namespace Mnemox.Components.Models
         public string Description { get; set; }
 
         [JsonProperty("type")]
-
         public ComponentTypesEnum Type { get; set; }
     }
 }
