@@ -10,5 +10,6 @@ namespace Mnemox.Timescale.DM.Dal
         Task DisconnectAsync();
         Task ExecuteNonQueryAsync(string command, List<TimescaleParameter> parameters = null);
         Task<DbDataReader> ExecuteReaderAsync(string command, List<TimescaleParameter> parameters = null);
+        Task<object> ExecuteScalarAsync(string command, List<TimescaleParameter> parameters = null);
     }
 }

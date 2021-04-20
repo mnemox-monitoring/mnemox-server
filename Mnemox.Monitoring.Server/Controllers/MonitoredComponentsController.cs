@@ -13,18 +13,32 @@ namespace Mnemox.Monitoring.Server.Controllers
     {
         private readonly ILogsManager _logsManager;
 
-        public MonitoredComponentsController(ILogsManager logsManager)
+        private readonly IComponentsDataManager _componentsDataManager;
+
+        public MonitoredComponentsController(ILogsManager logsManager, IComponentsDataManager componentsDataManager)
         {
             _logsManager = logsManager;
+
+            _componentsDataManager = componentsDataManager;
         }
 
+        /// <summary>
+        /// Adds a component to the list of components
+        /// </summary>
+        /// <param name="componentBaseModel"></param>
+        /// <returns></returns>
         [HttpPost]
         public async Task<IActionResult> RegisterComponent([FromBody]ComponentBaseModel componentBaseModel)
         {
             try
             {
+                var componentId = await _componentsDataManager.AddComponent(componentBaseModel);
 
-
+                return Ok(new ComponentIdModel { ComponentId = componentId });
+            }
+            catch (OutputException ex)
+            {
+                return CreateErrorResultFromOutputException(ex);
             }
             catch (HandledException)
             {
@@ -36,8 +50,6 @@ namespace Mnemox.Monitoring.Server.Controllers
 
                 return InternalServerErrorResult();
             }
-
-            return Ok();
         }
     }
 }

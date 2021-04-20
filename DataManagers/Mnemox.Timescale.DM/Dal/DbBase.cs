@@ -58,5 +58,18 @@ namespace Mnemox.Timescale.DM.Dal
                 await cmd.ExecuteNonQueryAsync();
             }
         }
+
+        public async Task<object> ExecuteScalarAsync(string command, List<TimescaleParameter> parameters = null)
+        {
+            using (var cmd = new NpgsqlCommand(command, _connection)
+            {
+                CommandType = CommandType.StoredProcedure
+            })
+            {
+                if (parameters != null && parameters.Count > 0) cmd.Parameters.AddRange(parameters.ToArray());
+
+                return await cmd.ExecuteScalarAsync();
+            }
+        }
     }
 }

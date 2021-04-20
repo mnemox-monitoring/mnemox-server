@@ -33,4 +33,8 @@
     <ProjectReference Include="..\Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ResponseModels\" />
+  </ItemGroup>
+
 </Project>

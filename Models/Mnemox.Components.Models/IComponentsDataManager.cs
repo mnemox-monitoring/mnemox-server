@@ -4,6 +4,6 @@ namespace Mnemox.Components.Models
 {
     public interface IComponentsDataManager
     {
-        Task AddComponents(ComponentBaseModel component);
+        Task<long> AddComponent(ComponentBaseModel component);
     }
 }
