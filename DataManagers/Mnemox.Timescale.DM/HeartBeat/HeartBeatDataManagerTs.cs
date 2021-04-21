@@ -1,8 +1,7 @@
-﻿using Mnemox.HeartBeat.Models;
-using Mnemox.Logs.Models;
+﻿using Mnemox.Logs.Models;
+using Mnemox.Monitoring.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Timescale.DM.Dal;
-using Npgsql;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;

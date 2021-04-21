@@ -2,7 +2,7 @@
 using Mnemox.Logs.Models.FilesLogs;
 using System.Threading.Tasks;
 
-namespace Mnemox.Logs.Helpers.FileLogs
+namespace Mnemox.Logs.Utils.FileLogs
 {
     public class FilesLogsManager : ILogsManager
     {
