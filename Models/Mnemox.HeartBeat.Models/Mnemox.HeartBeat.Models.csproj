@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mnemox.Monitoring.Models\Mnemox.Monitoring.Models.csproj" />
     <ProjectReference Include="..\Mnemox.Shared.Models\Mnemox.Shared.Models.csproj" />
   </ItemGroup>
 

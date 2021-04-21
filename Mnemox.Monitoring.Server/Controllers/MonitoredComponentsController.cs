@@ -1,13 +1,15 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mnemox.Components.Models;
 using Mnemox.Logs.Models;
+using Mnemox.Security.Utils;
 using Mnemox.Shared.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace Mnemox.Monitoring.Server.Controllers
 {
-    [Route("components")]
+    [TenantContextValidationFilter]
+    [Route("tenant/{tenantId:long}/components")]
     [ApiController]
     public class MonitoredComponentsController : MnemoxBaseController
     {
@@ -28,7 +30,7 @@ namespace Mnemox.Monitoring.Server.Controllers
         /// <param name="componentBaseModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> RegisterComponent([FromBody]ComponentBaseModel componentBaseModel)
+        public async Task<IActionResult> AddComponent([FromBody]ComponentBaseModel componentBaseModel)
         {
             try
             {

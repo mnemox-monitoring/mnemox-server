@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Mnemox.Shared.Models
+namespace Mnemox.Monitoring.Models
 {
     public class Metrics
     {

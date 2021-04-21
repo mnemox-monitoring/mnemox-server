@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Mnemox.HeartBeat.Models;
 using Mnemox.Logs.Models;
+using Mnemox.Monitoring.Models;
 using Mnemox.Shared.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace Mnemox.Monitoring.Server.Controllers
 {
-    [Route("heart-beat")]
+    [Route("tenant/{tenantId:long}/heart-beat")]
     [ApiController]
     public class HeartBeatController : MnemoxBaseController
     {

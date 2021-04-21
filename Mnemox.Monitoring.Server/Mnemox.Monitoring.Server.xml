@@ -4,7 +4,7 @@
         <name>Mnemox.Monitoring.Server</name>
     </assembly>
     <members>
-        <member name="M:Mnemox.Monitoring.Server.Controllers.HeartBeatController.StoreHeartBeat(Mnemox.HeartBeat.Models.HeartBeatRequest)">
+        <member name="M:Mnemox.Monitoring.Server.Controllers.HeartBeatController.StoreHeartBeat(Mnemox.Monitoring.Models.HeartBeatRequest)">
             <summary>
             Inserts heart beat
             </summary>
@@ -14,6 +14,13 @@
             - metrics -> optional
             </remarks>
             <param name="heartBeatRequest"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mnemox.Monitoring.Server.Controllers.MonitoredComponentsController.AddComponent(Mnemox.Components.Models.ComponentBaseModel)">
+            <summary>
+            Adds a component to the list of components
+            </summary>
+            <param name="componentBaseModel"></param>
             <returns></returns>
         </member>
     </members>

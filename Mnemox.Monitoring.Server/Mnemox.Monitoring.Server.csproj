@@ -28,9 +28,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DataManagers\Mnemox.Timescale.DM\Mnemox.Timescale.DM.csproj" />
-    <ProjectReference Include="..\Helpers\Mnemox.Logs\Mnemox.Logs.Helpers.csproj" />
     <ProjectReference Include="..\Models\Mnemox.Components.Models\Mnemox.Components.Models.csproj" />
-    <ProjectReference Include="..\Models\Mnemox.HeartBeat.Models\Mnemox.HeartBeat.Models.csproj" />
+    <ProjectReference Include="..\Models\Mnemox.Monitoring.Models\Mnemox.Monitoring.Models.csproj" />
+    <ProjectReference Include="..\Utils\Mnemox.Logs\Mnemox.Logs.Utils.csproj" />
+    <ProjectReference Include="..\Utils\Mnemox.Security\Mnemox.Security.Utils.csproj" />
   </ItemGroup>
 
   <ItemGroup>

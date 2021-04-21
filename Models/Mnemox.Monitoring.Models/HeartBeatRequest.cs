@@ -1,8 +1,7 @@
-﻿using Mnemox.Monitoring.Models;
-using System;
+﻿using System;
 using System.Text.Json.Serialization;
 
-namespace Mnemox.HeartBeat.Models
+namespace Mnemox.Monitoring.Models
 {
     public class HeartBeatRequest
     {

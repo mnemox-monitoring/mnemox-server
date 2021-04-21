@@ -1,7 +1,6 @@
-﻿using System;
-using System.Text.Json.Serialization;
+﻿using System.Text.Json.Serialization;
 
-namespace Mnemox.Shared.Models
+namespace Mnemox.Monitoring.Models
 {
     public class MachineDetails
     {
