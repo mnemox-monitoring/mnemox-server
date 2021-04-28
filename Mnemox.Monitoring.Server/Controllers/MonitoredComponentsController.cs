@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mnemox.Api.Security.Utils;
 using Mnemox.Components.Models;
 using Mnemox.Logs.Models;
-using Mnemox.Security.Utils;
 using Mnemox.Shared.Models;
 using System;
 using System.Threading.Tasks;
 
 namespace Mnemox.Monitoring.Server.Controllers
 {
+    [AuthenticationFilter]
     [TenantContextValidationFilter]
     [Route("tenant/{tenantId:long}/components")]
     [ApiController]

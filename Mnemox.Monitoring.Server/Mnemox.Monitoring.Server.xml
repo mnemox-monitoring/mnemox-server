@@ -4,6 +4,12 @@
         <name>Mnemox.Monitoring.Server</name>
     </assembly>
     <members>
+        <member name="M:Mnemox.Monitoring.Server.Controllers.Account.AuthController.SignIn(Mnemox.Account.Models.AuthRequest)">
+            <summary>
+            Sign-in Mnemox Monitoring Server users
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Mnemox.Monitoring.Server.Controllers.HeartBeatController.StoreHeartBeat(Mnemox.Monitoring.Models.HeartBeatRequest)">
             <summary>
             Inserts heart beat

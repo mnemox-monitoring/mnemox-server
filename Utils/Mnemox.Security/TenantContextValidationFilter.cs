@@ -1,10 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Mnemox.Account.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
 using System;
 
-namespace Mnemox.Security.Utils
+namespace Mnemox.Api.Security.Utils
 {
     public class TenantContextValidationFilter: ActionFilterAttribute
     {
@@ -18,19 +19,27 @@ namespace Mnemox.Security.Utils
             {
                 var tenantId = Convert.ToInt64(values[UrlAndContextPropertiesNames.TENANT_ID_PARAMETER_NAME]);
 
-                ///////////////////////////////////////////////////////////////////////////
-                //validate that user has access to this tenant
-                ///////////////////////////////////////////////////////////////////////////
+                var requestOwner = (RequestOwner)context.HttpContext.Items[UrlAndContextPropertiesNames.REQUEST_OWNER];
 
-                //var user = (User)context.HttpContext.Items[UrlAndContextPropertiesNames.REQUEST_USER];
-                //context.HttpContext.Items[UrlAndRequestsParameters.USER] = user;
+                if (requestOwner == null || !requestOwner.OwnerTenants.Exists(t => t == tenantId))
+                {
+                    SetUnauthorized(context);
+                }
             }
             else
             {
-                context.Result = new UnauthorizedObjectResult(
-                    new ResponseError { ErrorMessage = UNAUTHORIZED_ERROR_RESPONSE_TEXT, ErrorCode = MnemoxStatusCodes.UNAUTHORIZED.ToString()
-                });
+                SetUnauthorized(context);
             }
+        }
+
+        private void SetUnauthorized(ActionExecutingContext context)
+        {
+            context.Result = new UnauthorizedObjectResult(
+                new ResponseError
+                {
+                    ErrorMessage = UNAUTHORIZED_ERROR_RESPONSE_TEXT,
+                    ErrorCode = MnemoxStatusCodes.UNAUTHORIZED.ToString()
+                });
         }
     }
 }

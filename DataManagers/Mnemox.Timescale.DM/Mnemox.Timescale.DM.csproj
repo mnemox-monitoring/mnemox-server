@@ -10,11 +10,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Models\Mnemox.Account.Models\Mnemox.Account.Models.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Components.Models\Mnemox.Components.Models.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Logs.Models\Mnemox.Logs.Models.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Monitoring.Models\Mnemox.Monitoring.Models.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Shared.Models\Mnemox.Shared.Models.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Timescale.Models\Mnemox.Timescale.Models.csproj" />
+    <ProjectReference Include="..\..\Utils\Mnemox.Security.Utils\Mnemox.Security.Utils.csproj" />
   </ItemGroup>
 
 </Project>

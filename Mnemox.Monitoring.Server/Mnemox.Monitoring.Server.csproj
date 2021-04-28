@@ -31,11 +31,7 @@
     <ProjectReference Include="..\Models\Mnemox.Components.Models\Mnemox.Components.Models.csproj" />
     <ProjectReference Include="..\Models\Mnemox.Monitoring.Models\Mnemox.Monitoring.Models.csproj" />
     <ProjectReference Include="..\Utils\Mnemox.Logs\Mnemox.Logs.Utils.csproj" />
-    <ProjectReference Include="..\Utils\Mnemox.Security\Mnemox.Security.Utils.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="ResponseModels\" />
+    <ProjectReference Include="..\Utils\Mnemox.Security\Mnemox.Api.Security.Utils.csproj" />
   </ItemGroup>
 
 </Project>

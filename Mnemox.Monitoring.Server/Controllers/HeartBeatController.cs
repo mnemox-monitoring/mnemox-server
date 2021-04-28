@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Mnemox.Api.Security.Utils;
 using Mnemox.Logs.Models;
 using Mnemox.Monitoring.Models;
 using Mnemox.Shared.Models;
@@ -7,6 +8,8 @@ using System.Threading.Tasks;
 
 namespace Mnemox.Monitoring.Server.Controllers
 {
+    [AuthenticationFilter]
+    [TenantContextValidationFilter]
     [Route("tenant/{tenantId:long}/heart-beat")]
     [ApiController]
     public class HeartBeatController : MnemoxBaseController
