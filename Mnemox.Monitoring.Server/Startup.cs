@@ -12,6 +12,9 @@ using Mnemox.Timescale.DM.Dal;
 using Mnemox.Timescale.DM.HeartBeat;
 using Mnemox.Timescale.Models;
 using System.IO;
+using Mnemox.Components.Models;
+using Mnemox.Timescale.DM.Components;
+using Mnemox.Api.Security.Utils;
 
 namespace Mnemox.Monitoring.Server
 {
@@ -42,6 +45,8 @@ namespace Mnemox.Monitoring.Server
             {
                 c.SwaggerDoc(SWAGGER_VERSION, new OpenApiInfo { Title = SWAGGER_TITLE, Version = SWAGGER_VERSION });
 
+                c.OperationFilter<SwaggerAuthorizationHeaders>();
+
                 var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, SWAGGER_DOCUMENTATION_FILE);
 
                 c.IncludeXmlComments(filePath);
@@ -53,10 +58,10 @@ namespace Mnemox.Monitoring.Server
 
             services.AddTransient<ILogsManager>(s => filesLogsManager);
 
-            SetHeartBeatDataManagerTs(services);
+            SetTimescaleDataManagerTs(services);
         }
 
-        private void SetHeartBeatDataManagerTs(IServiceCollection services)
+        private void SetTimescaleDataManagerTs(IServiceCollection services)
         {
             const string TIMESCALEDB_FACTORY_SETTINGS_SECTION_NAME = "TimescaleDbFactorySettings";
 
@@ -67,6 +72,8 @@ namespace Mnemox.Monitoring.Server
             services.AddTransient<IDbFactory>(c => new TimescaleDbFactory(dbFactorySettings));
 
             services.AddTransient<IHeartBeatDataManager, HeartBeatDataManagerTs>();
+
+            services.AddTransient<IComponentsDataManager, ComponentsDataManagerTs>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

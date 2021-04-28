@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mnemox.Account.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
 using System.Text.Json;
@@ -17,7 +18,7 @@ namespace Mnemox.Monitoring.Server.Controllers
         [NonAction]
         protected ObjectResult CreateErrorResultFromOutputException(OutputException outputException)
         {
-            return StatusCode(outputException.HttpStatusCode, CreateErrorDescription(MnemoxStatusCodes.INVALID_MODEL, outputException.Message));
+            return StatusCode(outputException.HttpStatusCode, CreateErrorDescription(outputException.MnemoxStatusCode, outputException.Message));
         }
 
         private string CreateErrorDescription(MnemoxStatusCodes statusCode, string message = null)
@@ -25,6 +26,21 @@ namespace Mnemox.Monitoring.Server.Controllers
             return string.IsNullOrWhiteSpace(message) ?
                 JsonSerializer.Serialize(new { error_code = statusCode.ToString() }) :
                 JsonSerializer.Serialize(new { error_code = statusCode.ToString(), message });
+        }
+
+        public RequestOwner RequestOwner
+        { 
+            get
+            {
+                if (Request.HttpContext.Items.TryGetValue(UrlAndContextPropertiesNames.REQUEST_OWNER, out object requestUser))
+                {
+                    return (RequestOwner)requestUser;
+                }
+                else
+                {
+                    return null;
+                }
+            }
         }
     }
 }

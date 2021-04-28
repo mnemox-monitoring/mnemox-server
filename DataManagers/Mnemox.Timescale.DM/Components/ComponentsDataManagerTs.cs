@@ -44,7 +44,7 @@ namespace Mnemox.Timescale.DM.Components
                 {
                     throw new OutputException(new Exception(COMPONENT_NAME_IS_MANDATORY)) { 
                         HttpStatusCode = StatusCodes.Status400BadRequest,
-                        MnemoxStatusCodes = MnemoxStatusCodes.INVALID_MODEL
+                        MnemoxStatusCode = MnemoxStatusCodes.INVALID_MODEL
                     };
                 }
 
