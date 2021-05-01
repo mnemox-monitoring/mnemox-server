@@ -42,10 +42,10 @@ namespace Mnemox.Timescale.DM.Components
             {
                 if (string.IsNullOrWhiteSpace(component.Name))
                 {
-                    throw new OutputException(new Exception(COMPONENT_NAME_IS_MANDATORY)) { 
-                        HttpStatusCode = StatusCodes.Status400BadRequest,
-                        MnemoxStatusCode = MnemoxStatusCodes.INVALID_MODEL
-                    };
+                    throw new OutputException(
+                        new Exception(COMPONENT_NAME_IS_MANDATORY),
+                        StatusCodes.Status400BadRequest,
+                        MnemoxStatusCodes.INVALID_MODEL);
                 }
 
                 dbBase = _dbFactory.GetDbBase();
@@ -86,7 +86,10 @@ namespace Mnemox.Timescale.DM.Components
             }
             finally
             {
-                await dbBase?.DisconnectAsync();
+                if (dbBase != null)
+                {
+                    await dbBase.DisconnectAsync();
+                }
             }
         }
     }

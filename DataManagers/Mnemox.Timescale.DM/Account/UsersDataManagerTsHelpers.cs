@@ -7,8 +7,6 @@ using Mnemox.Timescale.DM.Dal;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Mnemox.Timescale.DM.Account
@@ -17,18 +15,28 @@ namespace Mnemox.Timescale.DM.Account
     {
         private readonly ILogsManager _logsManager;
         private readonly IDbFactory _dbFactory;
-        private readonly IDataManagersHelpers _dataManagersHelpers;
+        private readonly IDataManagersHelpersTs _dataManagersHelpers;
 
         private const string ALL_FIELDS_ARE_MANDATORY = "All fields are mandatory";
+        
         private const string USERNAME_PARAMETER_NAME = "p_username";
         private const string PASSWORD_PARAMETER_NAME = "p_password";
+        private const string TOKEN_PARAMETER_NAME = "p_token";
+        private const string OWNER_ID_PARAMETER_NAME = "p_owner_id";
+        private const string OWNER_TYPE_ID_PARAMETER_NAME = "p_owner_type_id";
+        private const string VALID_UNTIL_PARAMETER_NAME = "p_valid_until_utc";
+        
         private const string SIGN_IN_USER_FUNCTION_NAME = "tenants.users_authenticate";
+        private const string STORE_TOKEN_FUNCTION_NAME = "tenants.tokens_add";
+        
         private const string USER_ID_READER_FIELD_NAME = "o_user_id";
         private const string FIRST_NAME_READER_FIELD_NAME = "o_first_name";
         private const string LAST_NAME_READER_FIELD_NAME = "o_last_name";
-        private const string USER_ID_PARAMETER_NAME = "p_user_id";
-
-        public UsersDataManagerTsHelpers(ILogsManager logsManager, IDbFactory dbFactory, IDataManagersHelpers dataManagersHelpers)
+        
+        public UsersDataManagerTsHelpers(
+            ILogsManager logsManager, 
+            IDbFactory dbFactory, 
+            IDataManagersHelpersTs dataManagersHelpers)
         {
             _logsManager = logsManager;
 
@@ -47,12 +55,11 @@ namespace Mnemox.Timescale.DM.Account
             {
                 if (string.IsNullOrWhiteSpace(username) || string.IsNullOrWhiteSpace(password))
                 {
-                    throw new OutputException(new Exception(ALL_FIELDS_ARE_MANDATORY))
-                    {
-                        HttpStatusCode = StatusCodes.Status400BadRequest,
-
-                        MnemoxStatusCode = MnemoxStatusCodes.INVALID_MODEL
-                    };
+                    throw new OutputException(
+                        new Exception(ALL_FIELDS_ARE_MANDATORY),
+                        StatusCodes.Status400BadRequest,
+                        MnemoxStatusCodes.INVALID_MODEL
+                    );
                 }
 
                 var parameters = new List<TimescaleParameter>
@@ -108,35 +115,68 @@ namespace Mnemox.Timescale.DM.Account
             }
             finally
             {
-                await dbBase?.DisconnectAsync();
+                if (dbBase != null)
+                {
+                    await dbBase.DisconnectAsync();
+                }
             }
         }
 
-        public async Task SetSignedInUser(User user, string signInToken)
+        public async Task<long> SetSignedInUserIntoStorage(User user, string signInToken, DateTime tokenValidUntilUtc)
         {
+            IDbBase dbBase = null;
+
             try
             {
                 var parameters = new List<TimescaleParameter>
                 {
                     new TimescaleParameter
                     {
-                        NpgsqlValue = user.UserId,
-                        ParameterName = USER_ID_PARAMETER_NAME,
+                        NpgsqlValue = signInToken,
+                        ParameterName = TOKEN_PARAMETER_NAME,
                         NpgsqlDbType = NpgsqlDbType.Varchar
                     },
                     new TimescaleParameter
                     {
-                        //NpgsqlValue = password,
-                        //ParameterName = PASSWORD_PARAMETER_NAME,
-                        //NpgsqlDbType = NpgsqlDbType.Varchar
+                        NpgsqlValue = user.UserId,
+                        ParameterName = OWNER_ID_PARAMETER_NAME,
+                        NpgsqlDbType = NpgsqlDbType.Bigint
+                    },
+                    new TimescaleParameter
+                    {
+                        NpgsqlValue = (int)RequestOwnersTypeEnum.USER,
+                        ParameterName = OWNER_TYPE_ID_PARAMETER_NAME,
+                        NpgsqlDbType = NpgsqlDbType.Integer
+                    },
+                    new TimescaleParameter
+                    {
+                        NpgsqlValue = tokenValidUntilUtc,
+                        ParameterName = VALID_UNTIL_PARAMETER_NAME,
+                        NpgsqlDbType = NpgsqlDbType.Timestamp
                     }
                 };
+
+                dbBase = _dbFactory.GetDbBase();
+
+                await dbBase.ConnectAsync();
+
+                var tokenId = (long)await dbBase.ExecuteScalarAsync(STORE_TOKEN_FUNCTION_NAME, parameters);
+
+                return tokenId;
+
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 await _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
 
                 throw new HandledException(ex);
+            }
+            finally
+            {
+                if (dbBase != null)
+                {
+                    await dbBase.DisconnectAsync();
+                }
             }
         }
     }

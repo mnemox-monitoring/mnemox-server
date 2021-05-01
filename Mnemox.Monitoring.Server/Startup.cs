@@ -15,6 +15,11 @@ using System.IO;
 using Mnemox.Components.Models;
 using Mnemox.Timescale.DM.Components;
 using Mnemox.Api.Security.Utils;
+using Mnemox.Shared.Utils;
+using Mnemox.Account.Models;
+using Mnemox.Timescale.DM.Account;
+using Mnemox.Timescale.DM;
+using Mnemox.Security.Utils;
 
 namespace Mnemox.Monitoring.Server
 {
@@ -41,6 +46,8 @@ namespace Mnemox.Monitoring.Server
         {
             services.AddControllers();
 
+            services.AddMemoryCache();
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(SWAGGER_VERSION, new OpenApiInfo { Title = SWAGGER_TITLE, Version = SWAGGER_VERSION });
@@ -58,6 +65,14 @@ namespace Mnemox.Monitoring.Server
 
             services.AddTransient<ILogsManager>(s => filesLogsManager);
 
+            services.AddTransient<IMemoryCacheFacade, MemoryCacheFacade>();
+
+            services.AddTransient<ISecretsManager, SecretsManager>();
+
+            services.AddTransient<AuthenticationFilter>();
+
+            services.AddTransient<TenantContextValidationFilter>();
+            
             SetTimescaleDataManagerTs(services);
         }
 
@@ -74,6 +89,16 @@ namespace Mnemox.Monitoring.Server
             services.AddTransient<IHeartBeatDataManager, HeartBeatDataManagerTs>();
 
             services.AddTransient<IComponentsDataManager, ComponentsDataManagerTs>();
+
+            services.AddTransient<IUsersDataManagerTsHelpers, UsersDataManagerTsHelpers>();
+
+            services.AddTransient<IUsersDataManager, UsersDataManagerTs>();
+
+            services.AddTransient<IDataManagersHelpersTs, DataManagersHelpersTs>();
+
+            services.AddTransient<IUsersDataManager, UsersDataManagerTs>();
+
+            services.AddTransient<ITokensManager, TokensManagerTs>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

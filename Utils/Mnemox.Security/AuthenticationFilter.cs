@@ -4,6 +4,7 @@ using Mnemox.Account.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Mnemox.Api.Security.Utils
 {
@@ -11,22 +12,35 @@ namespace Mnemox.Api.Security.Utils
     {
         private const string UNAUTHORIZED_ERROR_RESPONSE_TEXT = "Unauthorized request";
 
-        public override void OnActionExecuting(ActionExecutingContext context)
+        private readonly ITokensManager _tokensManager;
+
+        public AuthenticationFilter(ITokensManager tokensManager)
+        {
+            _tokensManager = tokensManager;
+        }
+
+        public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             if(context.HttpContext.Request.Headers.TryGetValue(UrlAndContextPropertiesNames.AUTHENTICATION_HEADER_NAME, out var token))
             {
-                //TODO: validate token
+                var tokenDetails = await _tokensManager.GetTokenDetails(token);
+
+                if(tokenDetails == null)
+                {
+                    SetUnauthorized(context);
+
+                    return;
+                }
+
                 context.HttpContext.Items.Add(UrlAndContextPropertiesNames.REQUEST_OWNER,
                         new RequestOwner
                         {
-                            OwnerId = 1,
-                            OwnerTenants = new List<long>
-                            {
-                                1
-                            },
-                            OwnerType = MnemoxAccessObjectsTypes.AGENT
+                            OwnerId = tokenDetails.OwnerId,
+                            OwnerTypeId = tokenDetails.OwnerTypeId
                         }
                     );
+
+                await next();
             }
             else
             {

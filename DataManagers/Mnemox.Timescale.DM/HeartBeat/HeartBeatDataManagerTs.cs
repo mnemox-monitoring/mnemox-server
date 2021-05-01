@@ -56,7 +56,10 @@ namespace Mnemox.Timescale.DM.HeartBeat
             }
             finally
             {
-                await dbBase?.DisconnectAsync();
+                if (dbBase != null)
+                {
+                    await dbBase.DisconnectAsync();
+                }
             }
         }
     }

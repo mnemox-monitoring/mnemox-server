@@ -37,6 +37,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Account.Models", "Mo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Security.Utils", "Utils\Mnemox.Security.Utils\Mnemox.Security.Utils.csproj", "{88CC8862-AAB5-485E-8742-99A5A8A436E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Shared.Utils", "Utils\Mnemox.Shared.Utils\Mnemox.Shared.Utils.csproj", "{6886C462-415A-478C-A766-06ECC3DEE471}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -87,6 +89,10 @@ Global
 		{88CC8862-AAB5-485E-8742-99A5A8A436E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{88CC8862-AAB5-485E-8742-99A5A8A436E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{88CC8862-AAB5-485E-8742-99A5A8A436E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6886C462-415A-478C-A766-06ECC3DEE471}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6886C462-415A-478C-A766-06ECC3DEE471}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6886C462-415A-478C-A766-06ECC3DEE471}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6886C462-415A-478C-A766-06ECC3DEE471}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -102,6 +108,7 @@ Global
 		{97E60845-43BE-427E-A43E-DB6976EE65E4} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 		{0552358C-B923-48FA-85F6-F6C85889AA40} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 		{88CC8862-AAB5-485E-8742-99A5A8A436E4} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
+		{6886C462-415A-478C-A766-06ECC3DEE471} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA48D926-96AE-428E-8E1C-F85A185D05CD}

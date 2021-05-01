@@ -6,7 +6,7 @@
     <members>
         <member name="M:Mnemox.Monitoring.Server.Controllers.Account.AuthController.SignIn(Mnemox.Account.Models.AuthRequest)">
             <summary>
-            Sign-in Mnemox Monitoring Server users
+            Sign-in into Mnemox Monitoring Server
             </summary>
             <returns></returns>
         </member>
