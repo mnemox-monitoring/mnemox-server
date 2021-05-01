@@ -9,9 +9,14 @@ namespace Mnemox.Shared.Models
 
         public MnemoxStatusCodes MnemoxStatusCode { get; set; }
 
-        public OutputException(Exception exception) : base(exception.Message, exception.InnerException)
+        public OutputException(
+            Exception exception,
+            int httpStatusCode,
+            MnemoxStatusCodes mnemoxStatusCode) : base(exception.Message, exception.InnerException)
         {
+            HttpStatusCode = httpStatusCode;
 
+            MnemoxStatusCode = mnemoxStatusCode;
         }
     }
 }

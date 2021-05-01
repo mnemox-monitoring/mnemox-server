@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Mnemox.Monitoring.Server.Controllers
 {
-    [AuthenticationFilter]
+    [ServiceFilter(typeof(AuthenticationFilter))]
     [TenantContextValidationFilter]
     [Route("tenant/{tenantId:long}/heart-beat")]
     [ApiController]

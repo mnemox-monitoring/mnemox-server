@@ -32,6 +32,7 @@
     <ProjectReference Include="..\Models\Mnemox.Monitoring.Models\Mnemox.Monitoring.Models.csproj" />
     <ProjectReference Include="..\Utils\Mnemox.Logs\Mnemox.Logs.Utils.csproj" />
     <ProjectReference Include="..\Utils\Mnemox.Security\Mnemox.Api.Security.Utils.csproj" />
+    <ProjectReference Include="..\Utils\Mnemox.Shared.Utils\Mnemox.Shared.Utils.csproj" />
   </ItemGroup>
 
 </Project>

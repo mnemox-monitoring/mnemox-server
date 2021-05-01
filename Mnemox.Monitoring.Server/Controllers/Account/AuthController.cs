@@ -23,10 +23,9 @@ namespace Mnemox.Monitoring.Server.Controllers.Account
         }
 
         /// <summary>
-        /// Sign-in Mnemox Monitoring Server users
+        /// Sign-in into Mnemox Monitoring Server
         /// </summary>
         /// <returns></returns>
-        [Route("sign-in")]
         [HttpPost]
         public async Task<ActionResult<AuthResponse>> SignIn([FromBody]AuthRequest authRequest)
         {
