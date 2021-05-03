@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Mnemox.Account.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
+using Mnemox.Shared.Utils;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -14,9 +15,13 @@ namespace Mnemox.Api.Security.Utils
 
         private readonly ITokensManager _tokensManager;
 
-        public AuthenticationFilter(ITokensManager tokensManager)
+        private readonly IMemoryCacheFacade _memoryCacheFacade;
+
+        public AuthenticationFilter(ITokensManager tokensManager, IMemoryCacheFacade memoryCacheFacade)
         {
             _tokensManager = tokensManager;
+
+            _memoryCacheFacade = memoryCacheFacade;
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)

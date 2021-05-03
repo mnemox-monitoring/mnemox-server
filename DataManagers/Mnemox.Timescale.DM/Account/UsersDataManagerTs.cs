@@ -15,24 +15,20 @@ namespace Mnemox.Timescale.DM.Account
         private readonly ILogsManager _logsManager;
         private readonly IUsersDataManagerTsHelpers _usersDataManagerTsHelpers;
         private readonly ISecretsManager _secretsManager;
-        private readonly IMemoryCacheFacade _memoryCacheFacade;
-
+        
         private const short TOKEN_VALID_MINUTES = 60;
         private const string INVALID_USERNAME_OR_PASSWORD = "Invalid username or password";
 
         public UsersDataManagerTs(
             ILogsManager logsManager, 
             IUsersDataManagerTsHelpers usersDataManagerTsHelpers,
-            ISecretsManager secretsManager,
-            IMemoryCacheFacade memoryCacheFacade)
+            ISecretsManager secretsManager)
         {
             _logsManager = logsManager;
 
             _usersDataManagerTsHelpers = usersDataManagerTsHelpers;
 
             _secretsManager = secretsManager;
-
-            _memoryCacheFacade = memoryCacheFacade;
         }
 
         public async Task<AuthResponse> SignIn(AuthRequest authRequest)
@@ -54,15 +50,6 @@ namespace Mnemox.Timescale.DM.Account
                 var tokenValidUntilUtc = DateTime.UtcNow.AddMinutes(TOKEN_VALID_MINUTES);
 
                 var tokenId = await _usersDataManagerTsHelpers.SetSignedInUserIntoStorage(user, token, tokenValidUntilUtc);
-
-                _memoryCacheFacade.Set(token, new Tokens
-                {
-                    OwnerId = user.UserId,
-                    OwnerTypeId = (int)RequestOwnersTypeEnum.USER,
-                    Token = token,
-                    TokenId = tokenId,
-                    ValidUntilDateTimeUtc = tokenValidUntilUtc
-                }, TimeSpan.FromMinutes(TOKEN_VALID_MINUTES));
 
                 return new AuthResponse
                 {

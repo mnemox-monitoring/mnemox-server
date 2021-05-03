@@ -84,6 +84,10 @@ namespace Mnemox.Timescale.DM.Account
 
                             ValidUntilDateTimeUtc = _dataManagersHelpers.GetDateTime(reader, OUTPUT_TOKEN_VALID_UNTIL_PARAMTER_NAME).Value
                         };
+
+                        var tokenTtlInMinutes = GetTokenTtlMinutes(tokenResponse.ValidUntilDateTimeUtc.ToLocalTime());
+
+                        _memoryCacheFacade.Set(tokenResponse.Token, tokenResponse, TimeSpan.FromMinutes(tokenTtlInMinutes));
                     }
                 }
 
@@ -102,6 +106,11 @@ namespace Mnemox.Timescale.DM.Account
                     await dbBase.DisconnectAsync();
                 }
             }
+        }
+
+        public double GetTokenTtlMinutes(DateTime tokenValidUntilDateTimeUtc)
+        {
+            return (tokenValidUntilDateTimeUtc.ToLocalTime() - DateTime.Now).TotalMinutes;
         }
 
         public Tokens GetTokenFromMemoryCache(string token)
