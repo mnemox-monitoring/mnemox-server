@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mnemox.Shared.Models.Enums;
+using System;
 
 namespace Mnemox.Account.Models
 {
@@ -7,7 +8,7 @@ namespace Mnemox.Account.Models
         public long TokenId { get; set; }
         public string Token { get; set; }
         public long OwnerId { get; set; }
-        public int OwnerTypeId { get; set; }
+        public MnemoxAccessObjectsTypesEnum MnemoxAccessObjectsType { get; set; }
         public DateTime ValidUntilDateTimeUtc { get; set; }
     }
 }
