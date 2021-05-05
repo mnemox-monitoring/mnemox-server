@@ -1,6 +1,6 @@
 ﻿namespace Mnemox.Shared.Models.Enums
 {
-    public enum MnemoxAccessObjectsTypes
+    public enum MnemoxAccessObjectsTypesEnum
     {
         USER,
         AGENT,

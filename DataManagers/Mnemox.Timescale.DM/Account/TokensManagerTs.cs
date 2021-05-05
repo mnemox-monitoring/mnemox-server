@@ -1,6 +1,7 @@
 ﻿using Mnemox.Account.Models;
 using Mnemox.Logs.Models;
 using Mnemox.Shared.Models;
+using Mnemox.Shared.Models.Enums;
 using Mnemox.Shared.Utils;
 using Mnemox.Timescale.DM.Dal;
 using NpgsqlTypes;
@@ -24,13 +25,11 @@ namespace Mnemox.Timescale.DM.Account
         private readonly ILogsManager _logsManager;
         private readonly IDbFactory _dbFactory;
         private readonly IDataManagersHelpersTs _dataManagersHelpers;
-        private readonly IMemoryCacheFacade _memoryCacheFacade;
-
+        
         public TokensManagerTs(
             ILogsManager logsManager,
             IDbFactory dbFactory,
-            IDataManagersHelpersTs dataManagersHelpers,
-            IMemoryCacheFacade memoryCacheFacade)
+            IDataManagersHelpersTs dataManagersHelpers)
         {
             _logsManager = logsManager;
 
@@ -38,22 +37,16 @@ namespace Mnemox.Timescale.DM.Account
 
             _dataManagersHelpers = dataManagersHelpers;
 
-            _memoryCacheFacade = memoryCacheFacade;
         }
 
-        public async Task<Tokens> GetTokenDetails(string token)
+        public async Task<Tokens> GetTokenDetailsFromDataStorgeAsync(string token)
         {
             IDbBase dbBase = null;
 
+            Tokens tokenResponse = null;
+
             try
             {
-                var tokenResponse = GetTokenFromMemoryCache(token);
-
-                if (tokenResponse != null)
-                {
-                    return tokenResponse;
-                }
-
                 dbBase = _dbFactory.GetDbBase();
 
                 var parameters = new List<TimescaleParameter>
@@ -80,14 +73,10 @@ namespace Mnemox.Timescale.DM.Account
 
                             OwnerId = _dataManagersHelpers.GetLong(reader, OUTPUT_TOKEN_OWNER_ID_PARAMTER_NAME).Value,
 
-                            OwnerTypeId = _dataManagersHelpers.GetInt(reader, OUTPUT_TOKEN_OWNER_TYPE_ID_PARAMTER_NAME).Value,
+                            MnemoxAccessObjectsType = (MnemoxAccessObjectsTypesEnum)_dataManagersHelpers.GetInt(reader, OUTPUT_TOKEN_OWNER_TYPE_ID_PARAMTER_NAME).Value,
 
                             ValidUntilDateTimeUtc = _dataManagersHelpers.GetDateTime(reader, OUTPUT_TOKEN_VALID_UNTIL_PARAMTER_NAME).Value
                         };
-
-                        var tokenTtlInMinutes = GetTokenTtlMinutes(tokenResponse.ValidUntilDateTimeUtc.ToLocalTime());
-
-                        _memoryCacheFacade.Set(tokenResponse.Token, tokenResponse, TimeSpan.FromMinutes(tokenTtlInMinutes));
                     }
                 }
 
@@ -111,11 +100,6 @@ namespace Mnemox.Timescale.DM.Account
         public double GetTokenTtlMinutes(DateTime tokenValidUntilDateTimeUtc)
         {
             return (tokenValidUntilDateTimeUtc.ToLocalTime() - DateTime.Now).TotalMinutes;
-        }
-
-        public Tokens GetTokenFromMemoryCache(string token)
-        {
-            return _memoryCacheFacade.Get<Tokens>(token);
         }
     }
 }

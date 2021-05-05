@@ -21,7 +21,7 @@ namespace Mnemox.Api.Security.Utils
 
                 var requestOwner = (RequestOwner)context.HttpContext.Items[UrlAndContextPropertiesNames.REQUEST_OWNER];
 
-                if (!requestOwner.OwnerTenants.Exists(t => t == tenantId))
+                if (!requestOwner.OwnerTenants.Exists(t => t.TenantId == tenantId))
                 {
                     //SetUnauthorized(context);
                 }

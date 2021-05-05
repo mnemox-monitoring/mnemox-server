@@ -20,6 +20,7 @@ using Mnemox.Account.Models;
 using Mnemox.Timescale.DM.Account;
 using Mnemox.Timescale.DM;
 using Mnemox.Security.Utils;
+using Mnemox.Timescale.DM.Tenants;
 
 namespace Mnemox.Monitoring.Server
 {
@@ -99,6 +100,8 @@ namespace Mnemox.Monitoring.Server
             services.AddTransient<IUsersDataManager, UsersDataManagerTs>();
 
             services.AddTransient<ITokensManager, TokensManagerTs>();
+
+            services.AddTransient<ITenantObjectsManager, TenantsObjectsManagetTs>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

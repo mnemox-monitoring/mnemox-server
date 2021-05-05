@@ -4,7 +4,7 @@ using Mnemox.Account.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
 using Mnemox.Shared.Utils;
-using System.Collections.Generic;
+using System;
 using System.Threading.Tasks;
 
 namespace Mnemox.Api.Security.Utils
@@ -17,33 +17,61 @@ namespace Mnemox.Api.Security.Utils
 
         private readonly IMemoryCacheFacade _memoryCacheFacade;
 
-        public AuthenticationFilter(ITokensManager tokensManager, IMemoryCacheFacade memoryCacheFacade)
+        private readonly ITenantObjectsManager _tenantObjectsManager;
+
+        public AuthenticationFilter(
+            ITokensManager tokensManager, 
+            IMemoryCacheFacade memoryCacheFacade,
+            ITenantObjectsManager tenantObjectsManager)
         {
             _tokensManager = tokensManager;
 
             _memoryCacheFacade = memoryCacheFacade;
+
+            _tenantObjectsManager = tenantObjectsManager;
         }
 
         public override async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
             if(context.HttpContext.Request.Headers.TryGetValue(UrlAndContextPropertiesNames.AUTHENTICATION_HEADER_NAME, out var token))
             {
-                var tokenDetails = await _tokensManager.GetTokenDetails(token);
+                var requestOwner = _memoryCacheFacade.Get<RequestOwner>(token[0]);
 
-                if(tokenDetails == null)
+                if (requestOwner == null)
                 {
-                    SetUnauthorized(context);
+                    var tokenDetails = await _tokensManager.GetTokenDetailsFromDataStorgeAsync(token);
 
-                    return;
+                    if (tokenDetails == null)
+                    {
+                        SetUnauthorized(context);
+
+                        return;
+                    }
+
+                    var objectTenants = await _tenantObjectsManager.GetObjectTenantsAsync(
+                        tokenDetails.OwnerId, 
+                        tokenDetails.MnemoxAccessObjectsType);
+
+                    if(objectTenants == null)
+                    {
+                        SetUnauthorized(context);
+
+                        return;
+                    }
+
+                    requestOwner = new RequestOwner
+                    {
+                        OwnerId = tokenDetails.OwnerId,
+                        MnemoxAccessObjectsType = tokenDetails.MnemoxAccessObjectsType,
+                        OwnerTenants = objectTenants
+                    };
+
+                    var tokenTtlInMinutes = _tokensManager.GetTokenTtlMinutes(tokenDetails.ValidUntilDateTimeUtc.ToLocalTime());
+
+                    _memoryCacheFacade.Set(tokenDetails.Token, requestOwner, TimeSpan.FromMinutes(tokenTtlInMinutes));
                 }
 
-                context.HttpContext.Items.Add(UrlAndContextPropertiesNames.REQUEST_OWNER,
-                        new RequestOwner
-                        {
-                            OwnerId = tokenDetails.OwnerId,
-                            OwnerTypeId = tokenDetails.OwnerTypeId
-                        }
-                    );
+                context.HttpContext.Items.Add(UrlAndContextPropertiesNames.REQUEST_OWNER, requestOwner);
 
                 await next();
             }

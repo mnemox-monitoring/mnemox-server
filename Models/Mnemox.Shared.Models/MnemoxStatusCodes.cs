@@ -1,4 +1,4 @@
-﻿namespace Mnemox.Shared.Models.Enums
+﻿namespace Mnemox.Shared.Models
 {
     public enum MnemoxStatusCodes
     {

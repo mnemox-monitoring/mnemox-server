@@ -4,8 +4,10 @@ using Mnemox.Logs.Models;
 using Mnemox.Security.Utils;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
-using Mnemox.Shared.Utils;
+using Mnemox.Timescale.DM.Dal;
+using NpgsqlTypes;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mnemox.Timescale.DM.Account
@@ -15,20 +17,28 @@ namespace Mnemox.Timescale.DM.Account
         private readonly ILogsManager _logsManager;
         private readonly IUsersDataManagerTsHelpers _usersDataManagerTsHelpers;
         private readonly ISecretsManager _secretsManager;
-        
+        private readonly IDbFactory _dbFactory;
+        private readonly IDataManagersHelpersTs _dataManagersHelpers;
+
         private const short TOKEN_VALID_MINUTES = 60;
         private const string INVALID_USERNAME_OR_PASSWORD = "Invalid username or password";
 
         public UsersDataManagerTs(
             ILogsManager logsManager, 
             IUsersDataManagerTsHelpers usersDataManagerTsHelpers,
-            ISecretsManager secretsManager)
+            ISecretsManager secretsManager,
+            IDbFactory dbFactory,
+            IDataManagersHelpersTs dataManagersHelpers)
         {
             _logsManager = logsManager;
 
             _usersDataManagerTsHelpers = usersDataManagerTsHelpers;
 
             _secretsManager = secretsManager;
+
+            _dbFactory = dbFactory;
+
+            _dataManagersHelpers = dataManagersHelpers;
         }
 
         public async Task<AuthResponse> SignIn(AuthRequest authRequest)
