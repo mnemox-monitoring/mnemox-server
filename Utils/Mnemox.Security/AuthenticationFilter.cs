@@ -5,7 +5,6 @@ using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
 using Mnemox.Shared.Utils;
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Mnemox.Api.Security.Utils

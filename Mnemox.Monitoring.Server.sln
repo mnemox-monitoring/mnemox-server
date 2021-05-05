@@ -35,9 +35,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Monitoring.Models", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Account.Models", "Models\Mnemox.Account.Models\Mnemox.Account.Models.csproj", "{0552358C-B923-48FA-85F6-F6C85889AA40}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Security.Utils", "Utils\Mnemox.Security.Utils\Mnemox.Security.Utils.csproj", "{88CC8862-AAB5-485E-8742-99A5A8A436E4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Security.Utils", "Utils\Mnemox.Security.Utils\Mnemox.Security.Utils.csproj", "{88CC8862-AAB5-485E-8742-99A5A8A436E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Shared.Utils", "Utils\Mnemox.Shared.Utils\Mnemox.Shared.Utils.csproj", "{6886C462-415A-478C-A766-06ECC3DEE471}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Shared.Utils", "Utils\Mnemox.Shared.Utils\Mnemox.Shared.Utils.csproj", "{6886C462-415A-478C-A766-06ECC3DEE471}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC783694-6866-48EF-ADC2-1C2341D2679A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Tests", "Tests\Auth.Tests\Auth.Tests.csproj", "{3E1D03D1-277E-465E-A267-C5EA35055E90}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Tests\Shared\Shared.csproj", "{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -93,6 +99,14 @@ Global
 		{6886C462-415A-478C-A766-06ECC3DEE471}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6886C462-415A-478C-A766-06ECC3DEE471}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6886C462-415A-478C-A766-06ECC3DEE471}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E1D03D1-277E-465E-A267-C5EA35055E90}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E1D03D1-277E-465E-A267-C5EA35055E90}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E1D03D1-277E-465E-A267-C5EA35055E90}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E1D03D1-277E-465E-A267-C5EA35055E90}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +123,8 @@ Global
 		{0552358C-B923-48FA-85F6-F6C85889AA40} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 		{88CC8862-AAB5-485E-8742-99A5A8A436E4} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
 		{6886C462-415A-478C-A766-06ECC3DEE471} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
+		{3E1D03D1-277E-465E-A267-C5EA35055E90} = {FC783694-6866-48EF-ADC2-1C2341D2679A}
+		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6} = {FC783694-6866-48EF-ADC2-1C2341D2679A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA48D926-96AE-428E-8E1C-F85A185D05CD}
