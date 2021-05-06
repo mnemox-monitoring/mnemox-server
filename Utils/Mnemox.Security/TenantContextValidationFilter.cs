@@ -23,7 +23,7 @@ namespace Mnemox.Api.Security.Utils
 
                 if (!requestOwner.OwnerTenants.Exists(t => t.TenantId == tenantId))
                 {
-                    //SetUnauthorized(context);
+                    SetUnauthorized(context);
                 }
             }
             else

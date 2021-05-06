@@ -144,7 +144,7 @@ namespace Mnemox.Timescale.DM.Account
                     },
                     new TimescaleParameter
                     {
-                        NpgsqlValue = (int)RequestOwnersTypeEnum.USER,
+                        NpgsqlValue = (int)MnemoxAccessObjectsTypesEnum.USER,
                         ParameterName = OWNER_TYPE_ID_PARAMETER_NAME,
                         NpgsqlDbType = NpgsqlDbType.Integer
                     },
