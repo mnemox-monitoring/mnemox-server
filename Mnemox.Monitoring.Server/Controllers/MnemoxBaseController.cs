@@ -21,6 +21,12 @@ namespace Mnemox.Monitoring.Server.Controllers
             return StatusCode(outputException.HttpStatusCode, CreateErrorDescription(outputException.MnemoxStatusCode, outputException.Message));
         }
 
+        [NonAction]
+        protected ObjectResult CreateNotFound(string message)
+        {
+            return NotFound(CreateErrorDescription(MnemoxStatusCodes.NOT_FOUND, message));
+        }
+
         private string CreateErrorDescription(MnemoxStatusCodes statusCode, string message = null)
         {
             return string.IsNullOrWhiteSpace(message) ?

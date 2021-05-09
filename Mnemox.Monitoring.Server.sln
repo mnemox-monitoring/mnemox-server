@@ -41,9 +41,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Shared.Utils", "Util
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{FC783694-6866-48EF-ADC2-1C2341D2679A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Auth.Tests", "Tests\Auth.Tests\Auth.Tests.csproj", "{3E1D03D1-277E-465E-A267-C5EA35055E90}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Tests", "Tests\Auth.Tests\Auth.Tests.csproj", "{3E1D03D1-277E-465E-A267-C5EA35055E90}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Tests\Shared\Shared.csproj", "{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Tests\Shared\Shared.csproj", "{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

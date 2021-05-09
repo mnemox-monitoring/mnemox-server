@@ -21,6 +21,7 @@ using Mnemox.Timescale.DM.Account;
 using Mnemox.Timescale.DM;
 using Mnemox.Security.Utils;
 using Mnemox.Timescale.DM.Tenants;
+using Mnemox.Shared.Models.Settings;
 
 namespace Mnemox.Monitoring.Server
 {
@@ -32,7 +33,7 @@ namespace Mnemox.Monitoring.Server
         private const string SWAGGER_DOCUMENTATION_FILE = "Mnemox.Monitoring.Server.xml";
         private const string SWAGGER_VERSION = "v1";
         private const string SWAGGER_JSON = "/swagger/v1/swagger.json";
-        private const string DEFAULT_RESPONSE_CONTENT_TYPE = "application/json";
+        private const string DEFAULT_RESPONSE_CONTENT_TYPE = "text/html";
 
         #endregion
 
@@ -49,13 +50,20 @@ namespace Mnemox.Monitoring.Server
 
             services.AddMemoryCache();
 
+            var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
+
+            services.AddTransient<IServerSettings>(c => new ServerSettings
+            {
+                BasePath = applicationBasePath
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc(SWAGGER_VERSION, new OpenApiInfo { Title = SWAGGER_TITLE, Version = SWAGGER_VERSION });
 
                 c.OperationFilter<SwaggerAuthorizationHeaders>();
 
-                var filePath = Path.Combine(PlatformServices.Default.Application.ApplicationBasePath, SWAGGER_DOCUMENTATION_FILE);
+                var filePath = Path.Combine(applicationBasePath, SWAGGER_DOCUMENTATION_FILE);
 
                 c.IncludeXmlComments(filePath);
 
@@ -117,12 +125,7 @@ namespace Mnemox.Monitoring.Server
 
             app.UseAuthorization();
 
-            app.UseStaticFiles(new StaticFileOptions
-            {
-                ServeUnknownFileTypes = true,
-
-                DefaultContentType = DEFAULT_RESPONSE_CONTENT_TYPE
-            });
+            app.UseFileServer("/client");
 
             app.UseEndpoints(endpoints =>
             {
