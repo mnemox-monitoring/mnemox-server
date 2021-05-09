@@ -35,4 +35,8 @@
     <ProjectReference Include="..\Utils\Mnemox.Shared.Utils\Mnemox.Shared.Utils.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\" />
+  </ItemGroup>
+
 </Project>
