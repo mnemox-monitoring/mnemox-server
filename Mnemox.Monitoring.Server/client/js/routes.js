@@ -11,6 +11,11 @@ router.add(defaultPageRoute, function () {
   console.log('Home page');
 });
 
+
+router.add('client/test', function () {
+  console.log('Test page');
+});
+
 router.addUriListener();
 
 router.navigateTo(defaultPageRoute);

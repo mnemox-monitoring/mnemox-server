@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mnemox.Api.Security.Utils;
-using Mnemox.Components.Models;
 using Mnemox.Logs.Models;
+using Mnemox.Resources.Models;
 using Mnemox.Shared.Models;
 using System;
 using System.Threading.Tasks;
@@ -10,34 +10,34 @@ namespace Mnemox.Monitoring.Server.Controllers
 {
     [ServiceFilter(typeof(AuthenticationFilter))]
     [ServiceFilter(typeof(TenantContextValidationFilter))]
-    [Route("tenant/{tenantId:long}/components")]
+    [Route("tenant/{tenantId:long}/resources")]
     [ApiController]
-    public class MonitoredComponentsController : MnemoxBaseController
+    public class MonitoredResourcesController : MnemoxBaseController
     {
         private readonly ILogsManager _logsManager;
 
-        private readonly IComponentsDataManager _componentsDataManager;
+        private readonly IResourceDataManager _resourcesDataManager;
 
-        public MonitoredComponentsController(ILogsManager logsManager, IComponentsDataManager componentsDataManager)
+        public MonitoredResourcesController(ILogsManager logsManager, IResourceDataManager resourcesDataManager)
         {
             _logsManager = logsManager;
 
-            _componentsDataManager = componentsDataManager;
+            _resourcesDataManager = resourcesDataManager;
         }
 
         /// <summary>
-        /// Adds a component to the list of components
+        /// Adds a monitored resource
         /// </summary>
-        /// <param name="componentBaseModel"></param>
+        /// <param name="resourcesBaseModel"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> AddComponent([FromBody]ComponentBaseModel componentBaseModel)
+        public async Task<IActionResult> AddResource([FromBody]ResourceBaseModel resourcesBaseModel)
         {
             try
             {
-                var componentId = await _componentsDataManager.AddComponent(componentBaseModel);
+                var resourceId = await _resourcesDataManager.AddResource(resourcesBaseModel);
 
-                return Ok(new ComponentIdModel { ComponentId = componentId });
+                return Ok(new ResourceIdModel { ResourceId = resourceId });
             }
             catch (OutputException ex)
             {

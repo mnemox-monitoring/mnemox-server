@@ -5,10 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\..\Models\Mnemox.Logs.Models\Mnemox.Logs.Models.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Shared.Models\Mnemox.Shared.Models.csproj" />
   </ItemGroup>
