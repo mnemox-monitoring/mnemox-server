@@ -41,9 +41,9 @@
   <ItemGroup>
     <ProjectReference Include="..\DataManagers\Mnemox.Timescale.DM\Mnemox.Timescale.DM.csproj" />
     <ProjectReference Include="..\Models\Mnemox.Resources.Models\Mnemox.Resources.Models.csproj" />
-    <ProjectReference Include="..\Models\Mnemox.Monitoring.Models\Mnemox.Monitoring.Models.csproj" />
     <ProjectReference Include="..\Utils\Mnemox.Logs\Mnemox.Logs.Utils.csproj" />
     <ProjectReference Include="..\Utils\Mnemox.Security\Mnemox.Api.Security.Utils.csproj" />
+    <ProjectReference Include="..\Utils\Mnemox.Server.Utils\Mnemox.Server.Utils.csproj" />
     <ProjectReference Include="..\Utils\Mnemox.Shared.Utils\Mnemox.Shared.Utils.csproj" />
     <ProjectReference Include="..\Utils\Mnemox.Web.Utils\Mnemox.Web.Utils.csproj" />
   </ItemGroup>

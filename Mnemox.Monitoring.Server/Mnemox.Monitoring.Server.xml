@@ -26,7 +26,7 @@
             <summary>
             Adds a monitored resource
             </summary>
-            <param name="componentBaseModel"></param>
+            <param name="resourcesBaseModel"></param>
             <returns></returns>
         </member>
         <member name="M:Mnemox.Monitoring.Server.Controllers.Server.ServerInitializationController.DetectServerUnitializationStatus">

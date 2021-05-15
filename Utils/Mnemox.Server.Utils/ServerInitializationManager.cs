@@ -1,36 +1,54 @@
-﻿using Mnemox.Logs.Models;
-using Mnemox.Shared.Models;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Mnemox.Api.Security.Utils;
+using Mnemox.Logs.Models;
+using Mnemox.Security.Utils;
+using Mnemox.Shared.Models.Consts;
 using Mnemox.Shared.Models.Settings;
+using Mnemox.Shared.Utils;
 
 namespace Mnemox.Server.Utils
 {
-    public class ServerInitializationManager
+    public class ServerInitializationManager : IServerInitializationManager
     {
         private readonly IServerSettings _serverSettings;
 
         private readonly ILogsManager _logsManager;
 
-        public ServerInitializationManager(IServerSettings serverSettings, ILogsManager logsManager)
+        private readonly IServerInitializationManagerHelpers _serverInitializationManagerHelpers;
+
+        public ServerInitializationManager(
+            IServerSettings serverSettings, 
+            ILogsManager logsManager,
+            IServerInitializationManagerHelpers serverInitializationManagerHelpers)
         {
             _serverSettings = serverSettings;
 
             _logsManager = logsManager;
+
+            _serverInitializationManagerHelpers = serverInitializationManagerHelpers;
         }
 
         public bool IsServerInitialized()
         {
-            try
+            return _serverSettings.Initialized;
+        }
+
+        public void Initialize()
+        {
+            _serverSettings.Services.AddTransient<IMemoryCacheFacade, MemoryCacheFacade>();
+
+            _serverSettings.Services.AddTransient<ISecretsManager, SecretsManager>();
+
+            _serverSettings.Services.AddTransient<AuthenticationFilter>();
+
+            _serverSettings.Services.AddTransient<TenantContextValidationFilter>();
+
+            var databaseTypeName = _serverInitializationManagerHelpers.GetDatabaseType();
+
+            if (databaseTypeName == DatabasesConsts.TIMESCALEDB)
             {
-
+                _serverInitializationManagerHelpers.SetTimescaleDataManagerTs();
             }
-            catch(HandledException ex)
-            {
-                _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
-
-                throw;
-            }
-
-            return false;
         }
     }
 }
