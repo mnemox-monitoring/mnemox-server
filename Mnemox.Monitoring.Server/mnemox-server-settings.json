@@ -1,13 +1,10 @@
 {
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
-    }
-  },
   "AllowedHosts": "*",
-  "TimescaleDbFactorySettings": {
+  "ServerSettings": {
+    "Database": "Timescaledb",
+    "Initialized": false
+  },
+  "DbFactorySettings": {
     "ConnectionString": "Server=localhost;Port=5432;User Id=postgres;Password=1qazxsw2;Database=mnemox;Pooling=true;MinPoolSize=1;MaxPoolSize=50;Timeout=120;CommandTimeout=120;Keepalive=60;"
   }
 }
