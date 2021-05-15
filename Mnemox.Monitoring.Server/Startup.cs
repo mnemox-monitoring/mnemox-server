@@ -12,8 +12,6 @@ using Mnemox.Timescale.DM.Dal;
 using Mnemox.Timescale.DM.HeartBeat;
 using Mnemox.Timescale.Models;
 using System.IO;
-using Mnemox.Components.Models;
-using Mnemox.Timescale.DM.Components;
 using Mnemox.Api.Security.Utils;
 using Mnemox.Shared.Utils;
 using Mnemox.Account.Models;
@@ -22,6 +20,9 @@ using Mnemox.Timescale.DM;
 using Mnemox.Security.Utils;
 using Mnemox.Timescale.DM.Tenants;
 using Mnemox.Shared.Models.Settings;
+using Mnemox.Web.Utils;
+using Mnemox.Resources.Models;
+using Mnemox.Timescale.DM.Resources;
 
 namespace Mnemox.Monitoring.Server
 {
@@ -33,7 +34,6 @@ namespace Mnemox.Monitoring.Server
         private const string SWAGGER_DOCUMENTATION_FILE = "Mnemox.Monitoring.Server.xml";
         private const string SWAGGER_VERSION = "v1";
         private const string SWAGGER_JSON = "/swagger/v1/swagger.json";
-        private const string DEFAULT_RESPONSE_CONTENT_TYPE = "text/html";
 
         #endregion
 
@@ -78,6 +78,10 @@ namespace Mnemox.Monitoring.Server
 
             services.AddTransient<ISecretsManager, SecretsManager>();
 
+            services.AddTransient<IWebFilesManagerHelpers, WebFilesManagerHelpers>();
+
+            services.AddTransient<IWebFilesManager, WebFilesManager>();
+            
             services.AddTransient<AuthenticationFilter>();
 
             services.AddTransient<TenantContextValidationFilter>();
@@ -97,7 +101,7 @@ namespace Mnemox.Monitoring.Server
 
             services.AddTransient<IHeartBeatDataManager, HeartBeatDataManagerTs>();
 
-            services.AddTransient<IComponentsDataManager, ComponentsDataManagerTs>();
+            services.AddTransient<IResourceDataManager, ResourcesDataManagerTs>();
 
             services.AddTransient<IUsersDataManagerTsHelpers, UsersDataManagerTsHelpers>();
 
@@ -124,8 +128,6 @@ namespace Mnemox.Monitoring.Server
             app.UseRouting();
 
             app.UseAuthorization();
-
-            app.UseFileServer("/client");
 
             app.UseEndpoints(endpoints =>
             {

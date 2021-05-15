@@ -22,11 +22,17 @@
             <param name="heartBeatRequest"></param>
             <returns></returns>
         </member>
-        <member name="M:Mnemox.Monitoring.Server.Controllers.MonitoredComponentsController.AddComponent(Mnemox.Components.Models.ComponentBaseModel)">
+        <member name="M:Mnemox.Monitoring.Server.Controllers.MonitoredResourcesController.AddResource(Mnemox.Resources.Models.ResourceBaseModel)">
             <summary>
-            Adds a component to the list of components
+            Adds a monitored resource
             </summary>
             <param name="componentBaseModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mnemox.Monitoring.Server.Controllers.Server.ServerInitializationController.DetectServerUnitializationStatus">
+            <summary>
+            Detect if server initialized already
+            </summary>
             <returns></returns>
         </member>
     </members>

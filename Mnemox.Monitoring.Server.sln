@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Timescale.DM", "Data
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Timescale.Models", "Models\Mnemox.Timescale.Models\Mnemox.Timescale.Models.csproj", "{4308C4F3-F983-437A-8368-F86A39BBBD91}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Components.Models", "Models\Mnemox.Components.Models\Mnemox.Components.Models.csproj", "{CB08E906-A0A4-446A-97C1-B212D720D3CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Resources.Models", "Models\Mnemox.Resources.Models\Mnemox.Resources.Models.csproj", "{CB08E906-A0A4-446A-97C1-B212D720D3CB}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Api.Security.Utils", "Utils\Mnemox.Security\Mnemox.Api.Security.Utils.csproj", "{32794381-B8D8-4657-AF46-C824F14BABDF}"
 EndProject
@@ -44,6 +44,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Auth.Tests", "Tests\Auth.Tests\Auth.Tests.csproj", "{3E1D03D1-277E-465E-A267-C5EA35055E90}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Shared", "Tests\Shared\Shared.csproj", "{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Web.Utils", "Utils\Mnemox.Web.Utils\Mnemox.Web.Utils.csproj", "{591EE194-C58C-40BC-BA1D-59A23F309D84}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mnemox.Server.Utils", "Utils\Mnemox.Server.Utils\Mnemox.Server.Utils.csproj", "{17FD4A73-8293-4CCB-A782-ACB420EB77F5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -107,6 +111,14 @@ Global
 		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{591EE194-C58C-40BC-BA1D-59A23F309D84}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{591EE194-C58C-40BC-BA1D-59A23F309D84}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{591EE194-C58C-40BC-BA1D-59A23F309D84}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{591EE194-C58C-40BC-BA1D-59A23F309D84}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17FD4A73-8293-4CCB-A782-ACB420EB77F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17FD4A73-8293-4CCB-A782-ACB420EB77F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17FD4A73-8293-4CCB-A782-ACB420EB77F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17FD4A73-8293-4CCB-A782-ACB420EB77F5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +137,8 @@ Global
 		{6886C462-415A-478C-A766-06ECC3DEE471} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
 		{3E1D03D1-277E-465E-A267-C5EA35055E90} = {FC783694-6866-48EF-ADC2-1C2341D2679A}
 		{EA60596D-2E48-4D22-B1AF-F8619FE77AD6} = {FC783694-6866-48EF-ADC2-1C2341D2679A}
+		{591EE194-C58C-40BC-BA1D-59A23F309D84} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
+		{17FD4A73-8293-4CCB-A782-ACB420EB77F5} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA48D926-96AE-428E-8E1C-F85A185D05CD}

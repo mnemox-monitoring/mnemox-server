@@ -1,8 +1,8 @@
 ﻿using Newtonsoft.Json;
 
-namespace Mnemox.Components.Models
+namespace Mnemox.Resources.Models
 {
-    public class ComponentBaseModel
+    public class ResourceBaseModel
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -11,6 +11,6 @@ namespace Mnemox.Components.Models
         public string Description { get; set; }
 
         [JsonProperty("type")]
-        public ComponentTypesEnum Type { get; set; }
+        public ResourcesTypesEnum Type { get; set; }
     }
 }

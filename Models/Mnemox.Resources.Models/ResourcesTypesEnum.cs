@@ -1,10 +1,10 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace Mnemox.Components.Models
+namespace Mnemox.Resources.Models
 {
     [JsonConverter(typeof(StringEnumConverter))]
-    public enum ComponentTypesEnum
+    public enum ResourcesTypesEnum
     {
         MACHINE,
         SERVICE

@@ -1,49 +1,48 @@
 ﻿using Microsoft.AspNetCore.Http;
-using Mnemox.Components.Models;
 using Mnemox.Logs.Models;
+using Mnemox.Resources.Models;
 using Mnemox.Shared.Models;
-using Mnemox.Shared.Models.Enums;
 using Mnemox.Timescale.DM.Dal;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Mnemox.Timescale.DM.Components
+namespace Mnemox.Timescale.DM.Resources
 {
-    public class ComponentsDataManagerTs : IComponentsDataManager
+    public class ResourcesDataManagerTs : IResourceDataManager
     {
-        private const string ADD_COMPONENT_FUNCTION_NAME = "components.components_add";
+        private const string ADD_RESOURCE_FUNCTION_NAME = "resources.resources_add";
 
-        private const string COMPONENT_NAME_PARAMETER_NAME = "p_component_name";
+        private const string RESOURCE_NAME_PARAMETER_NAME = "p_resource_name";
 
-        private const string COMPONENT_DESCRIPTION_PARAMETER_NAME = "p_component_description";
+        private const string RESOURCE_DESCRIPTION_PARAMETER_NAME = "p_resource_description";
 
-        private const string COMPONENT_TYPE_PARAMETER_NAME = "p_component_type";
+        private const string RESOURCE_TYPE_PARAMETER_NAME = "p_resource_type";
 
-        private const string COMPONENT_NAME_IS_MANDATORY = "Component name is mandatory";
+        private const string RESOURCE_NAME_IS_MANDATORY = "Resource name is mandatory";
 
         private readonly ILogsManager _logsManager;
 
         private readonly IDbFactory _dbFactory;
 
-        public ComponentsDataManagerTs(ILogsManager logsManager, IDbFactory dbFactory)
+        public ResourcesDataManagerTs(ILogsManager logsManager, IDbFactory dbFactory)
         {
             _logsManager = logsManager;
 
             _dbFactory = dbFactory;
         }
 
-        public async Task<long> AddComponent(ComponentBaseModel component)
+        public async Task<long> AddResource(ResourceBaseModel resource)
         {
             IDbBase dbBase = null;
 
             try
             {
-                if (string.IsNullOrWhiteSpace(component.Name))
+                if (string.IsNullOrWhiteSpace(resource.Name))
                 {
                     throw new OutputException(
-                        new Exception(COMPONENT_NAME_IS_MANDATORY),
+                        new Exception(RESOURCE_NAME_IS_MANDATORY),
                         StatusCodes.Status400BadRequest,
                         MnemoxStatusCodes.INVALID_MODEL);
                 }
@@ -54,29 +53,29 @@ namespace Mnemox.Timescale.DM.Components
                 {
                     new TimescaleParameter
                     {
-                        NpgsqlValue = component.Name,
-                        ParameterName = COMPONENT_NAME_PARAMETER_NAME,
+                        NpgsqlValue = resource.Name,
+                        ParameterName = RESOURCE_NAME_PARAMETER_NAME,
                         NpgsqlDbType = NpgsqlDbType.Varchar
                     },
                     new TimescaleParameter
                     {
-                        NpgsqlValue = component.Description,
-                        ParameterName = COMPONENT_DESCRIPTION_PARAMETER_NAME,
+                        NpgsqlValue = resource.Description,
+                        ParameterName = RESOURCE_DESCRIPTION_PARAMETER_NAME,
                         NpgsqlDbType = NpgsqlDbType.Varchar
                     },
                     new TimescaleParameter
                     {
-                        NpgsqlValue = component.Type,
-                        ParameterName = COMPONENT_TYPE_PARAMETER_NAME,
+                        NpgsqlValue = resource.Type,
+                        ParameterName = RESOURCE_TYPE_PARAMETER_NAME,
                         NpgsqlDbType = NpgsqlDbType.Smallint
                     }
                 };
 
                 await dbBase.ConnectAsync();
 
-                var componentId = (long)await dbBase.ExecuteScalarAsync(ADD_COMPONENT_FUNCTION_NAME, parameters);
+                var resourceId = (long)await dbBase.ExecuteScalarAsync(ADD_RESOURCE_FUNCTION_NAME, parameters);
 
-                return componentId;
+                return resourceId;
             }
             catch (Exception ex)
             {
