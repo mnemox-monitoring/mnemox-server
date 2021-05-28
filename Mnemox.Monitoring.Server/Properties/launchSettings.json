@@ -20,7 +20,7 @@
     "Mnemox.Monitoring.Server": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "client",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },

@@ -29,7 +29,7 @@
             <param name="resourcesBaseModel"></param>
             <returns></returns>
         </member>
-        <member name="M:Mnemox.Monitoring.Server.Controllers.Server.ServerInitializationController.DetectServerUnitializationStatus">
+        <member name="M:Mnemox.Monitoring.Server.Controllers.Server.ServerInitializationController.DetectServerInitializationStatus">
             <summary>
             Detect if server initialized already
             </summary>

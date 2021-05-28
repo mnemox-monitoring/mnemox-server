@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Mnemox.Logs.Models;
 using Mnemox.Shared.Models;
+using Mnemox.Shared.Models.Settings;
 using System;
 using System.Threading.Tasks;
 
@@ -12,9 +13,13 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
     {
         private readonly ILogsManager _logsManager;
 
-        public ServerInitializationController(ILogsManager logsManager)
+        private readonly IServerSettings _serverSettings;
+
+        public ServerInitializationController(ILogsManager logsManager, IServerSettings serverSettings)
         {
             _logsManager = logsManager;
+
+            _serverSettings = serverSettings;
         }
 
         /// <summary>
@@ -22,13 +27,12 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IActionResult> DetectServerUnitializationStatus()
+        [Route("init-status")]
+        public async Task<IActionResult> DetectServerInitializationStatus()
         {
             try
             {
-                
-
-                return Ok();
+                return Ok(new { isInitialized = _serverSettings.Initialized });
             }
             catch (OutputException ex)
             {
