@@ -40,6 +40,8 @@ namespace Mnemox.Monitoring.Server
 
             services.AddMemoryCache();
 
+            services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()));
+
             var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
 
             var serverSettings = new ServerSettings();
@@ -87,10 +89,18 @@ namespace Mnemox.Monitoring.Server
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             app.UseDeveloperExceptionPage();
 
             app.UseSwagger();
+
+            app.Use((context, next) =>
+            {
+                context.Response.Headers.Remove("Server");
+                context.Response.Headers.Add("Access-Control-Allow-Origin", "*");
+                context.Response.Headers.Add("Access-Control-Allow-Methods",
+                    new[] { "POST, GET, OPTIONS, PUT, DELETE" });
+                return next();
+            });
 
             app.UseSwaggerUI(c => c.SwaggerEndpoint(SWAGGER_JSON, $"{SWAGGER_TITLE} {SWAGGER_VERSION}"));
 

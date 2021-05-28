@@ -1,0 +1,82 @@
+﻿
+
+:root {
+  --forms-border-color: #d7d7d7 1px solid;
+  --forms-background-color: #FFFFFF;
+  --input-fields-padding: 5px;
+  --input-fields-bottom-border: #e9e4e4 1px solid;
+  --small-form-max-width: 500px;
+  --rounded-corner-size: 5px;
+}
+
+body {
+  background-color: #FAFAFA;
+}
+
+input[type="text"], input[type="password"] {
+  padding: var(--input-fields-padding);
+  border: none;
+  border-bottom: var(--input-fields-bottom-border);
+}
+
+button {
+  background-color: #5194aa;
+  border: none;
+  border-radius: var(--rounded-corner-size);
+  color:#FFFFFF;
+  padding:7px 15px 7px 15px;
+  cursor:pointer;
+}
+
+button:hover {
+  background-color: #36829b;
+}
+
+.center{
+  margin:auto;
+}
+
+.small-form {
+  padding: 15px;
+  border: var(--forms-border-color);
+  max-width: var(--small-form-max-width);
+  background-color: var(--forms-background-color);
+  border-radius: var(--rounded-corner-size);
+}
+
+.small-title{
+  font-size:120%;
+}
+
+.full-length{
+  width:98%;
+}
+
+.form-item{
+  margin-bottom:25px;
+}
+
+.story {
+  text-align:center;
+  padding-top:10px;
+  padding-bottom:20px;
+}
+
+.message-container{
+  padding: 10px 0 25px 0;
+}
+
+.oposit-float {
+  float: right;
+}
+
+.clear-both {
+  clear: both;
+}
+
+.field-header {
+  text-transform: uppercase;
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom:6px;
+}
