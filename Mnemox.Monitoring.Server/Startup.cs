@@ -81,10 +81,7 @@ namespace Mnemox.Monitoring.Server
 
             var serverInitialized = new ServerInitializationManager(serverSettings, filesLogsManager, serverInitializationManagerHelpers);
 
-            if (serverSettings.Initialized)
-            {
-                serverInitialized.Initialize();
-            }
+            serverInitialized.Initialize();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

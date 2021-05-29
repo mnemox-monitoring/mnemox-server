@@ -30,8 +30,8 @@ namespace Mnemox.Monitoring.Server.Controllers
         private string CreateErrorDescription(MnemoxStatusCodes statusCode, string message = null)
         {
             return string.IsNullOrWhiteSpace(message) ?
-                JsonSerializer.Serialize(new { error_code = statusCode.ToString() }) :
-                JsonSerializer.Serialize(new { error_code = statusCode.ToString(), message });
+                JsonSerializer.Serialize(new { errorCode = statusCode.ToString() }) :
+                JsonSerializer.Serialize(new { errorCode = statusCode.ToString(), message });
         }
 
         public RequestOwner RequestOwner

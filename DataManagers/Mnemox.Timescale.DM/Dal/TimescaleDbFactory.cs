@@ -1,5 +1,4 @@
-﻿using Mnemox.Shared.Models.Settings;
-using Mnemox.Timescale.Models;
+﻿using Mnemox.Timescale.Models;
 
 namespace Mnemox.Timescale.DM.Dal
 {
@@ -12,9 +11,16 @@ namespace Mnemox.Timescale.DM.Dal
             _factorySettings = factorySettings;
         }
 
-        public IDbBase GetDbBase()
+        public IDbBase GetDbBase(string connectionString = null)
         {
-            return new DbBase(_factorySettings.ConnectionString);
+            return new DbBase(connectionString ?? _factorySettings.ConnectionString);
+        }
+
+        public string CreateConnectionString(string databaseAddress, string username, string password, int? port = 5432, string database = "mnemox")
+        {
+            var connectionString = string.Format(_factorySettings.ConnectionStringTemplate, databaseAddress, port, username, password, database);
+
+            return connectionString;
         }
     }
 }

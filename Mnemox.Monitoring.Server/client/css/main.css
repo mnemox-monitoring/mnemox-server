@@ -1,6 +1,4 @@
-﻿
-
-:root {
+﻿:root {
   --forms-border-color: #d7d7d7 1px solid;
   --forms-background-color: #FFFFFF;
   --input-fields-padding: 5px;
@@ -13,13 +11,13 @@ body {
   background-color: #FAFAFA;
 }
 
-input[type="text"], input[type="password"] {
+input[type="text"], input[type="password"], input[type="number"] {
   padding: var(--input-fields-padding);
   border: none;
   border-bottom: var(--input-fields-bottom-border);
 }
 
-button {
+.button {
   background-color: #5194aa;
   border: none;
   border-radius: var(--rounded-corner-size);
@@ -28,7 +26,7 @@ button {
   cursor:pointer;
 }
 
-button:hover {
+.button:hover {
   background-color: #36829b;
 }
 
@@ -42,6 +40,7 @@ button:hover {
   max-width: var(--small-form-max-width);
   background-color: var(--forms-background-color);
   border-radius: var(--rounded-corner-size);
+  box-sizing: border-box;
 }
 
 .small-title{
@@ -56,14 +55,12 @@ button:hover {
   margin-bottom:25px;
 }
 
-.story {
-  text-align:center;
-  padding-top:10px;
-  padding-bottom:20px;
-}
-
 .message-container{
   padding: 10px 0 25px 0;
+}
+
+.float {
+  float: left;
 }
 
 .oposit-float {
@@ -79,4 +76,25 @@ button:hover {
   font-weight: 600;
   font-size: 12px;
   margin-bottom:6px;
+}
+
+.display-none{
+  display:none;
+}
+
+.story {
+  max-width: var(--small-form-max-width);
+  margin-top: 20px;
+  margin-bottom: 20px;
+  display: grid;
+  grid-template-columns: auto auto auto;
+  grid-column-gap: 30px;
+}
+
+.story .current{
+  font-weight:bold;
+}
+
+.dots-loader{
+  height:8px;
 }

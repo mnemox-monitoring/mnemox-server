@@ -9,7 +9,9 @@
     this._toast = SiiimpleToast.setOptions({
       position: 'top|right'
     });
-
+    this._textHelpers = new TextHelpers();
+    this._uiHelpers = new UiHelpers(this._toast);
+    this._serverInitializer = new ServerInitialization(this._textHelpers, this._uiHelpers, this._communication);
   }
 
   init() {
@@ -20,25 +22,6 @@
       } else {
         router.navigateTo(CLIENT_ROUTES.SIGNIN_PAGE);
       }
-    });
-  }
-
-  validateDatabase() {
-    const address = document.getElementById("txtDbAddress").value;
-    const username = document.getElementById("txtDbUsername").value;
-    const password = document.getElementById("txtDbPassword").value;
-    if (!address || !username || !password) {
-      this._toast.alert('All fields are mandatory!'); 
-      return;
-    }
-    const request = {
-      address: address,
-      username: username,
-      password: password
-    }
-    const url = this._communication.createUrl(VARIABLES.API_URL, API_ROUTES.SERVER.INIT_STATUS);
-    this._communication.post(url, request, (response) => {
-      console.log(response);
     });
   }
 }

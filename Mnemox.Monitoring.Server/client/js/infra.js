@@ -25,20 +25,29 @@
   }
 
   sendRequest(method, url, body, onSuccess, onFail = null, toJson = true) {
-    var xhttp = new XMLHttpRequest();
+    let xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
+      if (this.readyState === 4) {
         let response = null;
         if (toJson) {
           response = JSON.parse(this.responseText);
         } else {
           response = this.responseText;
         }
-        onSuccess(response);
+        if (this.status === 200) {
+          onSuccess(response);
+        } else if (onFail) {
+          onFail(response);
+        }
       }
     };
     xhttp.open(method, url, true);
-    xhttp.send(body);
+    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+    let requestBody = null;
+    if (body) {
+      requestBody = JSON.stringify(body);
+    }
+    xhttp.send(requestBody);
   }
 
   createUrl(baseUrl, route) {
@@ -72,8 +81,25 @@ class CookieManager {
 class TemplatesManager{
   constructor(communicationManager) {
     this._communication = communicationManager;
+    this._templates = {};
   }
-  getTemplate(path, onSuccess) {
-    this._communication.get(path, onSuccess, null, false);
+  getTemplate(path, onSuccess, jsonForMustache) {
+    const template = this._templates[path];
+    if (template) {
+      alert(1);
+      onSuccess(template);
+      return;
+    }
+    this._communication.get(path, (template) => {
+      alert(0);
+      if (jsonForMustache) {
+        var html = mustache.render(template, jsonForMustache);
+        this._templates[path] = html;
+        onSuccess(html);
+      } else {
+        this._templates[path] = template;
+        onSuccess(template);
+      }
+    }, null, false);
   }
 }
