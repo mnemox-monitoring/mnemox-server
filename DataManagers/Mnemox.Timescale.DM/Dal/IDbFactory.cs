@@ -2,6 +2,7 @@
 {
     public interface IDbFactory
     {
-        IDbBase GetDbBase();
+        string CreateConnectionString(string databaseAddress, string username, string password, int? port = 5432, string database = "mnemox");
+        IDbBase GetDbBase(string connectionString = null);
     }
 }

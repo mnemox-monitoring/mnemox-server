@@ -1,0 +1,27 @@
+﻿<div class="center story">
+  <div id="divDbInitStory" class="current">1. {{language.databaseInitialization}}</div> 
+  <div id="divServerDetailsStory">2. {{language.serverDetails}}</div> 
+  <div id="divUserCredentialsStory">3. {{language.userCredentials}}</div>
+</div>
+<div class="center small-form" id="divDatabaseDetails">
+  <div class="field-header">{{language.databaseAddress}}</div>
+  <div class="form-item"><input type="text" id="txtDbAddress" class="full-length" placeholder="{{language.address}}" /></div>
+  <div class="field-header">{{language.databaseUsername}}</div>
+  <div class="form-item"><input type="text" id="txtDbUsername" class="full-length" placeholder="{{language.username}}" /></div>
+  <div class="field-header">{{language.databasePassword}}</div>
+  <div class="form-item"><input type="password" id="txtDbPassword" class="full-length" placeholder="{{language.password}}" /></div>
+  <div class="field-header">{{language.databasePort}}</div>
+  <div class="form-item"><input type="number" id="txtDbPort" class="full-length" placeholder="{{language.port}}" /></div>
+  <div class="form-item"><div id="divBtnDbNext" class="button oposit-float" onclick="mnemoxClient._serverInitializer.validateDatabase()">{{language.next}}</div></div>
+  <div class="clear-both"></div>
+</div>
+
+<div class="center small-form display-none" id="divServerDetails">
+  <div class="field-header">Server name</div>
+  <div class="form-item"><input type="number" id="txtServerName" class="full-length" placeholder="Name" /></div>
+  <div class="form-item">
+    <div class="button float" onclick="mnemoxClient.validateDatabase()">{{language.previous}}</div>
+    <div class="button oposit-float" onclick="mnemoxClient._serverInitializer.validateServerName()">{{language.next}}</div>
+  </div>
+  <div class="clear-both"></div>
+</div>

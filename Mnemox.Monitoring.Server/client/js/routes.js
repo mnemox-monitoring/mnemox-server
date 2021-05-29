@@ -9,8 +9,11 @@ const API_ROUTES = {
 
 const CLIENT_ROUTES = {
   INIT_PAGE: `/${defaultPageRoute}/init`,
-  SIGNIN_PAGE: `/${defaultPageRoute}/sign-in`,
-  INIT_1_PAGE: `/${defaultPageRoute}/pages/init-1.html`
+  SIGNIN_PAGE: `/${defaultPageRoute}/sign-in`
+};
+
+const TEMPLATES_ROUTES = {
+  INIT_TEMPLATE: `/${defaultPageRoute}/pages/init.html`
 };
 
 let router = new Router({
@@ -30,10 +33,12 @@ router.add('client/test', function () {
 
 router.add('client/init', function () {
   mnemoxClient._templatesManager.getTemplate(
-    CLIENT_ROUTES.INIT_1_PAGE,
+    TEMPLATES_ROUTES.INIT_TEMPLATE,
     (response) => {
       document.getElementById("main").innerHTML = response;
-    });
+    }, { language: LANGUAGE });
+
+  
 });
 
 router.addUriListener();

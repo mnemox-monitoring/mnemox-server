@@ -35,5 +35,11 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="M:Mnemox.Monitoring.Server.Controllers.Server.ServerInitializationController.ValidateDatabaseExistence(Mnemox.Shared.Models.Requests.DatabaseDetails)">
+            <summary>
+            Database existence validation
+            </summary>
+            <returns></returns>
+        </member>
     </members>
 </doc>
