@@ -46,7 +46,7 @@ namespace Mnemox.Timescale.DM.HeartBeat
 
                 await dbBase.ConnectAsync();
 
-                await dbBase.ExecuteNonQueryAsync(ADD_HEART_BEAT_FUNCTION_NAME, parameters);
+                await dbBase.ExecuteNonQueryFunctionAsync(ADD_HEART_BEAT_FUNCTION_NAME, parameters);
             }
             catch(Exception ex)
             {

@@ -64,7 +64,7 @@ namespace Mnemox.Timescale.DM.Tenants
 
                 await dbBase.ConnectAsync();
 
-                using (var reader = await dbBase.ExecuteReaderAsync(GET_OBJECT_TENANTS_FUNCTION_NAME, parameters))
+                using (var reader = await dbBase.ExecuteReaderFunctionAsync(GET_OBJECT_TENANTS_FUNCTION_NAME, parameters))
                 {
                     if (!reader.HasRows)
                     {

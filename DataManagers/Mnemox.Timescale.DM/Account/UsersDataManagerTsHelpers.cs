@@ -82,7 +82,7 @@ namespace Mnemox.Timescale.DM.Account
 
                 await dbBase.ConnectAsync();
 
-                using (var userReader = await dbBase.ExecuteReaderAsync(SIGN_IN_USER_FUNCTION_NAME, parameters))
+                using (var userReader = await dbBase.ExecuteReaderFunctionAsync(SIGN_IN_USER_FUNCTION_NAME, parameters))
                 {
                     if (!userReader.HasRows)
                     {

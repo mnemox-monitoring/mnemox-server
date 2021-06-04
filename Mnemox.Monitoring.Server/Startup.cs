@@ -43,18 +43,27 @@ namespace Mnemox.Monitoring.Server
             services.AddCors(options => options.AddPolicy("AllowAll", p => p.AllowAnyOrigin()));
 
             var applicationBasePath = PlatformServices.Default.Application.ApplicationBasePath;
+            
+            var fullSettings = new FullSettings();
 
-            var serverSettings = new ServerSettings();
+            Configuration.Bind(fullSettings);
 
-            Configuration.GetSection(SERVER_SETTINGS_SECTION_NAME).Bind(serverSettings);
+            fullSettings.ServerSettings.BasePath = applicationBasePath;
 
-            serverSettings.BasePath = applicationBasePath;
+            services.AddSingleton<IFullSettings>(s => fullSettings);
 
-            serverSettings.Services = services;
+            services.AddSingleton<ISettingsManager, SettingsManager>();
 
-            serverSettings.Configuration = Configuration;
+            services.AddTransient<IServerSettings>(s => fullSettings.ServerSettings);
+            
+            var apiConfiguration = new ApiConfiguration
+            {
+                Services = services,
 
-            services.AddTransient<IServerSettings>(c => serverSettings);
+                Configuration = Configuration
+            };
+
+            services.AddTransient<IApiConfiguration>(c => apiConfiguration);
 
             var filesLogsManager = new FilesLogsManager(new FilesLogsConfiguration { });
 
@@ -77,9 +86,13 @@ namespace Mnemox.Monitoring.Server
                 c.EnableAnnotations();
             });
 
-            var serverInitializationManagerHelpers = new ServerInitializationManagerHelpers(serverSettings);
+            var serverInitializationManagerHelpers = new ServerInitializationManagerHelpers(fullSettings.ServerSettings, apiConfiguration);
 
-            var serverInitialized = new ServerInitializationManager(serverSettings, filesLogsManager, serverInitializationManagerHelpers);
+            var serverInitialized = new ServerInitializationManager(
+                fullSettings.ServerSettings, 
+                filesLogsManager, 
+                serverInitializationManagerHelpers, 
+                apiConfiguration);
 
             serverInitialized.Initialize();
         }

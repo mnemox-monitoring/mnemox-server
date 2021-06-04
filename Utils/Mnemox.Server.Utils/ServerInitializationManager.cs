@@ -16,16 +16,21 @@ namespace Mnemox.Server.Utils
 
         private readonly IServerInitializationManagerHelpers _serverInitializationManagerHelpers;
 
+        private readonly IApiConfiguration _apiConfiguration;
+
         public ServerInitializationManager(
             IServerSettings serverSettings, 
             ILogsManager logsManager,
-            IServerInitializationManagerHelpers serverInitializationManagerHelpers)
+            IServerInitializationManagerHelpers serverInitializationManagerHelpers,
+            IApiConfiguration apiConfiguration)
         {
             _serverSettings = serverSettings;
 
             _logsManager = logsManager;
 
             _serverInitializationManagerHelpers = serverInitializationManagerHelpers;
+
+            _apiConfiguration = apiConfiguration;
         }
 
         public bool IsServerInitialized()
@@ -35,13 +40,13 @@ namespace Mnemox.Server.Utils
 
         public void Initialize()
         {
-            _serverSettings.Services.AddTransient<IMemoryCacheFacade, MemoryCacheFacade>();
+            _apiConfiguration.Services.AddTransient<IMemoryCacheFacade, MemoryCacheFacade>();
 
-            _serverSettings.Services.AddTransient<ISecretsManager, SecretsManager>();
+            _apiConfiguration.Services.AddTransient<ISecretsManager, SecretsManager>();
 
-            _serverSettings.Services.AddTransient<AuthenticationFilter>();
+            _apiConfiguration.Services.AddTransient<AuthenticationFilter>();
 
-            _serverSettings.Services.AddTransient<TenantContextValidationFilter>();
+            _apiConfiguration.Services.AddTransient<TenantContextValidationFilter>();
 
             var databaseTypeName = _serverInitializationManagerHelpers.GetDatabaseType();
 

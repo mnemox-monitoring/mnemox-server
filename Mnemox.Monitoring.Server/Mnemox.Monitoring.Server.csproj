@@ -88,6 +88,13 @@
     <None Update="client\pages\init.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Files\Database\Timescaledb\core-tables-and-functions-initialization.sql">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Files\Database\Timescaledb\" />
   </ItemGroup>
 
 </Project>

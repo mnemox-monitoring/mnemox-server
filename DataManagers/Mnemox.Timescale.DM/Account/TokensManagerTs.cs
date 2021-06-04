@@ -61,7 +61,7 @@ namespace Mnemox.Timescale.DM.Account
 
                 await dbBase.ConnectAsync();
 
-                using (var reader = await dbBase.ExecuteReaderAsync(GET_TOKEN_DETAILS_FUNCTION_NAME, parameters))
+                using (var reader = await dbBase.ExecuteReaderFunctionAsync(GET_TOKEN_DETAILS_FUNCTION_NAME, parameters))
                 {
                     if (reader.HasRows && reader.Read())
                     {

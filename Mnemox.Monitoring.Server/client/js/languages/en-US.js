@@ -1,4 +1,4 @@
-﻿LANGUAGE = {
+﻿var LANGUAGE = {
   databaseAddress: "Database address",
   address: "Address",
   databaseUsername: "Database username",
@@ -11,5 +11,16 @@
   next: "Next",
   databaseInitialization: "Database Initialization",
   serverDetails: "Server details",
-  userCredentials: "User credentials"
+  userCredentials: "User credentials",
+  serverName: "Server name (have to be unique)",
+  name: "Name",
+  serverPort: "Server port (default 5000 can be overridden)",
+  cannotEstablishConnectionError: "Cannot establish connection to the database, please validate the database credentials",
+  responseError: "Response error",
+  cannotCreateDbExtension: "Cannot create extension",
+  cannotCreateSchema: "Cannot create schema",
+  cannotDropSchema: "Cannot drop schema",
+  systemError: "System error",
+  cannotRunQuery: "Cannot run query",
+  cannotSetDatabaseStateParameter: "Cannot set database state parameter, please re-try"
 }
