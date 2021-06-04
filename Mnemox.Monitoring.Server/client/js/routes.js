@@ -37,8 +37,6 @@ router.add('client/init', function () {
     (response) => {
       document.getElementById("main").innerHTML = response;
     }, { language: LANGUAGE });
-
-  
 });
 
 router.addUriListener();

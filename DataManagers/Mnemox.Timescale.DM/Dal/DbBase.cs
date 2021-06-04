@@ -29,7 +29,7 @@ namespace Mnemox.Timescale.DM.Dal
             await _connection?.CloseAsync();
         }
 
-        public async Task<DbDataReader> ExecuteReaderAsync(string command, List<TimescaleParameter> parameters = null)
+        public async Task<DbDataReader> ExecuteReaderFunctionAsync(string command, List<TimescaleParameter> parameters = null)
         {
             DbDataReader reader = null;
 
@@ -46,7 +46,37 @@ namespace Mnemox.Timescale.DM.Dal
             return reader;
         }
 
+        public async Task<DbDataReader> ExecuteReaderQueryAsync(string command, List<TimescaleParameter> parameters = null)
+        {
+            DbDataReader reader = null;
+
+            using (var cmd = new NpgsqlCommand(command, _connection)
+            {
+                CommandType = CommandType.Text
+            })
+            {
+                if (parameters != null && parameters.Count > 0) cmd.Parameters.AddRange(parameters.ToArray());
+
+                reader = await cmd.ExecuteReaderAsync();
+            }
+
+            return reader;
+        }
+
         public async Task ExecuteNonQueryAsync(string command, List<TimescaleParameter> parameters = null)
+        {
+            using (var cmd = new NpgsqlCommand(command, _connection)
+            {
+                CommandType = CommandType.Text
+            })
+            {
+                if (parameters != null && parameters.Count > 0) cmd.Parameters.AddRange(parameters.ToArray());
+
+                await cmd.ExecuteNonQueryAsync();
+            }
+        }
+
+        public async Task ExecuteNonQueryFunctionAsync(string command, List<TimescaleParameter> parameters = null)
         {
             using (var cmd = new NpgsqlCommand(command, _connection)
             {

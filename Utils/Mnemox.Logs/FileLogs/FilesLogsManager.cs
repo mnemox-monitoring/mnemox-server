@@ -14,9 +14,9 @@ namespace Mnemox.Logs.Utils.FileLogs
         }
 
         
-        public Task ErrorAsync(ErrorLogStructure errorLogStructure)
+        public async Task ErrorAsync(ErrorLogStructure errorLogStructure)
         {
-            throw new System.NotImplementedException();
+            
         }
     }
 }

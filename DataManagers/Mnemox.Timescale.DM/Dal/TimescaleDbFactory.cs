@@ -1,4 +1,4 @@
-﻿using Mnemox.Timescale.Models;
+﻿using Mnemox.Shared.Models.Settings;
 
 namespace Mnemox.Timescale.DM.Dal
 {

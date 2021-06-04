@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mnemox.DataStorage.Models;
 using Mnemox.Logs.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Requests;
 using Mnemox.Shared.Models.Settings;
 using Mnemox.Timescale.DM.Dal;
+using Mnemox.Timescale.DM.Infrastructure;
 using System;
 using System.Threading.Tasks;
 
@@ -20,6 +23,8 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
 
         private readonly IDbFactory _dbFactory;
 
+        private readonly IDataStorageInfrastructureManager _dataStorageInfrastructureManager;
+
         private const string SERVER_INITIALIZED_ALREADY = "Server initialized already";
 
         private const string INVALID_DATABASE_DETAILS = "Invalid database details all fields are mandatory";
@@ -27,13 +32,16 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
         public ServerInitializationController(
             ILogsManager logsManager, 
             IServerSettings serverSettings,
-            IDbFactory dbFactory)
+            IDbFactory dbFactory,
+            IDataStorageInfrastructureManager dataStorageInfrastructureManager)
         {
             _logsManager = logsManager;
 
             _serverSettings = serverSettings;
 
             _dbFactory = dbFactory;
+
+            _dataStorageInfrastructureManager = dataStorageInfrastructureManager;
         }
 
         /// <summary>
@@ -110,6 +118,13 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
                 {
                     throw new OutputException(ex, StatusCodes.Status400BadRequest, MnemoxStatusCodes.CANNOT_CONNECT_TO_THE_DATABASE);
                 }
+
+                await _dataStorageInfrastructureManager.InitializeDataStorage(
+                    new InfrastructureSettings
+                    {
+                        ConnectonString = connectionString
+                    }
+                );
 
                 return Ok(new { databaseServerExists = true });
             }

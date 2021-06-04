@@ -86,12 +86,10 @@ class TemplatesManager{
   getTemplate(path, onSuccess, jsonForMustache) {
     const template = this._templates[path];
     if (template) {
-      alert(1);
       onSuccess(template);
       return;
     }
     this._communication.get(path, (template) => {
-      alert(0);
       if (jsonForMustache) {
         var html = mustache.render(template, jsonForMustache);
         this._templates[path] = html;

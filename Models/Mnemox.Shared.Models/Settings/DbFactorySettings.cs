@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Mnemox.Timescale.Models
+﻿namespace Mnemox.Shared.Models.Settings
 {
     public class DbFactorySettings
     {
