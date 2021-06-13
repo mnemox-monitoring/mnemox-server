@@ -1,11 +1,19 @@
-create table if not exists server.database_states(
-	database_state_id bigserial,
+create table if not exists server.servers(
+	server_id serial,
+	server_name character varying(255),
 	state_id smallint,
 	insert_date_time_utc timestamp without time zone null default timezone('utc'::text, now()),
-	constraint database_state_pk primary key (database_state_id)
+	constraint servers_pk primary key (server_id)
 );
 
-create index on server.database_states("insert_date_time_utc");
+create table if not exists server.initialization_states(
+	initialization_state_id bigserial,
+	state_id smallint,
+	insert_date_time_utc timestamp without time zone null default timezone('utc'::text, now()),
+	constraint initialization_state_pk primary key (initialization_state_id)
+);
+
+create index on server.initialization_states("insert_date_time_utc");
 
 
 create table if not exists tenants.tenants (
@@ -196,17 +204,84 @@ begin
 end;
 $function$;
 
-drop function if exists server.database_states_get_last();
-create or replace function server.database_states_get_last()
+drop function if exists server.initialization_states_get_last();
+create or replace function server.initialization_states_get_last()
  returns smallint
  language plpgsql
 as $function$
 declare r_state_id smallint;
 begin
 
-	select state_id into r_state_id from server.database_states order by insert_date_time_utc desc limit 1;
+	select state_id into r_state_id from server.initialization_states order by insert_date_time_utc desc limit 1;
 
 	return r_state_id;
+
+end;
+$function$;
+
+drop function if exists server.initialization_states_set(smallint);
+create or replace function server.initialization_states_set(p_state_id smallint)
+ returns void
+ language plpgsql
+as $function$
+begin
+
+	insert into server.initialization_states(state_id) values(p_state_id);
+
+end;
+$function$;
+
+drop function if exists server.initialization_states_get_last();
+create or replace function server.initialization_states_get_last()
+ returns table (o_state_id smallint)
+ language plpgsql
+as $function$
+begin
+
+	return query
+	select state_id from server.initialization_states order by insert_date_time_utc desc limit 1;
+
+end;
+$function$;
+
+drop function if exists server.servers_get_by_state_or_all(smallint);
+create or replace function server.servers_get_by_state_or_all(p_state_id smallint)
+ returns table(o_server_id integer, o_server_name character varying(255), o_state_id smallint)
+ language plpgsql
+as $function$
+begin
+
+	return query
+	select server_id, server_name, state_id from "server".servers where state_id = coalesce(p_state_id, state_id);
+
+end;
+$function$;
+
+drop function if exists server.servers_add(character varying(255), smallint);
+create or replace function server.servers_add(p_server_name character varying(255), p_state_id smallint)
+ returns integer
+ language plpgsql
+as $function$
+declare r_server_id integer;
+begin
+
+	insert into "server".servers(server_name, state_id) values(p_server_name, p_state_id)
+	returning server_id into r_server_id;
+
+	return r_server_id;
+end;
+$function$;
+
+
+drop function if exists server.servers_get_details_by_id(bigint);
+create or replace function server.servers_get_details_by_id(p_server_id bigint)
+ returns table(o_server_id integer, o_server_name character varying(255), o_state_id smallint)
+ language plpgsql
+as $function$
+begin
+
+	return query
+	select server_id, server_name, state_id from "server".servers where server_id = p_server_id;
 
 end;
 $function$;

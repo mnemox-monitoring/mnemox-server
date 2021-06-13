@@ -3,9 +3,9 @@ using Mnemox.DataStorage.Models;
 using Mnemox.Logs.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
+using Mnemox.Shared.Models.Requests;
 using Mnemox.Shared.Models.Settings;
 using Mnemox.Timescale.DM.Dal;
-using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -22,6 +22,8 @@ namespace Mnemox.Timescale.DM.Infrastructure
 
         private readonly ISettingsManager _settingsManager;
 
+        private readonly IServersManager _serversManager;
+
         private const string PATH_TO_DATABASE_INITIALIZATION_FILES_FOLDER = "Files/Database/Timescaledb";
 
         private const string TABLES_AND_FUNCTIONS_FILE = "core-tables-and-functions-initialization.sql";
@@ -30,7 +32,8 @@ namespace Mnemox.Timescale.DM.Infrastructure
             ILogsManager logsManager, 
             IDbFactory dbFactory, 
             ITimescaleInfrastructureHelpers timescaleInfrastructureHelpers,
-            ISettingsManager settingsManager)
+            ISettingsManager settingsManager,
+            IServersManager serversManager)
         {
             _logsManager = logsManager;
 
@@ -39,10 +42,12 @@ namespace Mnemox.Timescale.DM.Infrastructure
             _timescaleInfrastructureHelpers = timescaleInfrastructureHelpers;
 
             _settingsManager = settingsManager;
+
+            _serversManager = serversManager;
         }
 
 
-        public async Task InitializeDataStorage(dynamic settings)
+        public async Task<InitializationStatesEnums> InitializeDataStorage(dynamic settings)
         {
             IDbBase db = null;
 
@@ -54,11 +59,13 @@ namespace Mnemox.Timescale.DM.Infrastructure
 
                 await db.ConnectAsync();
 
-                var databaseInitializetionState = await _timescaleInfrastructureHelpers.DatabaseInitializationState(db);
+                var databaseInitializationState = await _timescaleInfrastructureHelpers.InitializationState(db);
 
-                if(databaseInitializetionState == DatabaseStatesEnums.INITIALIZED)
+                if (databaseInitializationState == InitializationStatesEnums.DATABASE_INITIALIZED)
                 {
-                    return;
+                    _timescaleInfrastructureHelpers.ReInitConnectionString(infrastructureSettings);
+
+                    return databaseInitializationState;
                 }
                 
                 await _timescaleInfrastructureHelpers.CreateSchema(db, "server");
@@ -86,11 +93,13 @@ namespace Mnemox.Timescale.DM.Infrastructure
 
                 await _timescaleInfrastructureHelpers.RunNonQuery(db, tablesAndFunctionsInitialization);
 
-                _settingsManager.FullSettings.DbFactorySettings.ConnectionString = infrastructureSettings.ConnectonString;
-
                 await _settingsManager.ReloadSettingsAsync();
 
-                await _timescaleInfrastructureHelpers.DatabaseStateSet(db, DatabaseStatesEnums.INITIALIZED);
+                _timescaleInfrastructureHelpers.ReInitConnectionString(infrastructureSettings);
+
+                await _serversManager.ServerInitizalizationStateSet(InitializationStatesEnums.DATABASE_INITIALIZED);
+
+                return InitializationStatesEnums.DATABASE_INITIALIZED;
             }
             catch (OutputException)
             {

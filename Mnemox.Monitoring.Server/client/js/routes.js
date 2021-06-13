@@ -3,7 +3,8 @@
 const API_ROUTES = {
   SERVER: {
     INIT_STATUS: "server/init-status",
-    VALIDATE_DATABASE: "server/validate/database"
+    VALIDATE_DATABASE: "server/validate/database",
+    INIT_SERVER_DETAILS: "server/init"
   }
 };
 
@@ -31,12 +32,9 @@ router.add('client/test', function () {
   console.log('Test page');
 });
 
-router.add('client/init', function () {
-  mnemoxClient._templatesManager.getTemplate(
-    TEMPLATES_ROUTES.INIT_TEMPLATE,
-    (response) => {
-      document.getElementById("main").innerHTML = response;
-    }, { language: LANGUAGE });
+router.add('client/init', async function () {
+  let responseTemplate = await mnemoxClient._templatesManager.getTemplate(TEMPLATES_ROUTES.INIT_TEMPLATE, { language: LANGUAGE });
+  document.getElementById("main").innerHTML = responseTemplate;
 });
 
 router.addUriListener();

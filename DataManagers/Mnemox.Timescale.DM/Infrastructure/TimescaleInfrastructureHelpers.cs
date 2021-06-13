@@ -2,10 +2,9 @@
 using Mnemox.Logs.Models;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
+using Mnemox.Shared.Models.Settings;
 using Mnemox.Timescale.DM.Dal;
-using NpgsqlTypes;
 using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -15,19 +14,19 @@ namespace Mnemox.Timescale.DM.Infrastructure
     {
         private readonly ILogsManager _logsManager;
 
+        private readonly ISettingsManager _settingsManager;
+
         private const string SELECT_SERVER_SCHEMA_INFO = "select * from information_schema.schemata where schema_name = 'server';";
 
         private const string SELECT_DATABASE_STATE_TABLE_INFO = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'server' AND table_type = 'BASE TABLE' and table_name = 'database_states';";
 
-        private const string GET_DATABASE_INITIALIZATION_STATE_FNC_NAME = "server.database_states_get_last";
+        private const string GET_INITIALIZATION_STATE_FNC_NAME = "server.initialization_states_get_last";
 
-        private const string SET_DATABASE_STATE_FNC_NAME = "server.database_states_set";
-
-        private const string STATE_ID_PARAMETER_NAME = "p_state_id";
-
-        public TimescaleInfrastructureHelpers(ILogsManager logsManager)
+        public TimescaleInfrastructureHelpers(ILogsManager logsManager, ISettingsManager settingsManager)
         {
             _logsManager = logsManager;
+
+            _settingsManager = settingsManager;
         }
 
         public async Task CreateSchema(IDbBase dbBase, string schemaName)
@@ -118,7 +117,7 @@ namespace Mnemox.Timescale.DM.Infrastructure
             }
         }
 
-        public async Task<DatabaseStatesEnums> DatabaseInitializationState(IDbBase dbBase)
+        public async Task<InitializationStatesEnums> InitializationState(IDbBase dbBase)
         {
             try
             {
@@ -126,7 +125,7 @@ namespace Mnemox.Timescale.DM.Infrastructure
                 {
                     if (!reader.HasRows)
                     {
-                        return DatabaseStatesEnums.NOT_INITIALIZED;
+                        return InitializationStatesEnums.DATABASE_NOT_INITIALIZED;
                     }
                 }
 
@@ -134,18 +133,18 @@ namespace Mnemox.Timescale.DM.Infrastructure
                 {
                     if (!reader.HasRows)
                     {
-                        return DatabaseStatesEnums.NOT_INITIALIZED;
+                        return InitializationStatesEnums.DATABASE_NOT_INITIALIZED;
                     }
                 }
 
-                var state = await dbBase.ExecuteScalarAsync(GET_DATABASE_INITIALIZATION_STATE_FNC_NAME);
+                var state = await dbBase.ExecuteScalarAsync(GET_INITIALIZATION_STATE_FNC_NAME);
 
                 if(state is DBNull)
                 {
-                    return DatabaseStatesEnums.NOT_INITIALIZED;
+                    return InitializationStatesEnums.DATABASE_NOT_INITIALIZED;
                 }
 
-                return (DatabaseStatesEnums)(short)state;
+                return (InitializationStatesEnums)(short)state;
             }
             catch (Exception ex)
             {
@@ -158,31 +157,9 @@ namespace Mnemox.Timescale.DM.Infrastructure
             }
         }
 
-        public async Task DatabaseStateSet(IDbBase dbBase, DatabaseStatesEnums databaseState)
+        public void ReInitConnectionString(InfrastructureSettings infrastructureSettings)
         {
-            try
-            {
-                var parameters = new List<TimescaleParameter> { 
-                    new TimescaleParameter
-                    {
-                        NpgsqlValue = (short)databaseState,
-                        ParameterName = STATE_ID_PARAMETER_NAME,
-                        NpgsqlDbType = NpgsqlDbType.Smallint
-                    }
-                };
-
-                await dbBase.ExecuteNonQueryFunctionAsync(SET_DATABASE_STATE_FNC_NAME, parameters);
-
-            }
-            catch (Exception ex)
-            {
-                await _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
-
-                throw new OutputException(
-                    ex,
-                    StatusCodes.Status500InternalServerError,
-                    MnemoxStatusCodes.CANNOT_SET_DATABASE_STATE_PARAMETER);
-            }
+            _settingsManager.FullSettings.DbFactorySettings.ConnectionString = infrastructureSettings.ConnectonString;
         }
     }
 }

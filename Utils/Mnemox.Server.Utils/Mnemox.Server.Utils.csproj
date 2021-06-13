@@ -12,7 +12,6 @@
     <ProjectReference Include="..\..\DataManagers\Mnemox.Timescale.DM\Mnemox.Timescale.DM.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Logs.Models\Mnemox.Logs.Models.csproj" />
     <ProjectReference Include="..\..\Models\Mnemox.Shared.Models\Mnemox.Shared.Models.csproj" />
-    <ProjectReference Include="..\..\Models\Mnemox.Timescale.Models\Mnemox.Timescale.Models.csproj" />
     <ProjectReference Include="..\Mnemox.Security\Mnemox.Api.Security.Utils.csproj" />
   </ItemGroup>
 

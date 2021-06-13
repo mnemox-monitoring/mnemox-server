@@ -2,8 +2,8 @@
 {
     public enum StatesEnums
     {
-        NO_STATE,
         DELETED,
-        ACTIVE
+        ACTIVE,
+        INACTIVE
     }
 }

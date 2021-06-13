@@ -8,47 +8,50 @@
     };
   }
 
-  post(url, body, onSuccess, onFail = null, toJson = true) {
-    this.sendRequest(this.HTTP_METHODS.POST, url, body, onSuccess, onFail, toJson);
+  async postAsync(url, body, toJson = true) {
+    return this.sendRequest(this.HTTP_METHODS.POST, url, body, toJson);
   }
 
-  get(url, onSuccess, onFail = null, toJson = true) {
-    this.sendRequest(this.HTTP_METHODS.GET, url, null, onSuccess, onFail, toJson);
+  async getAsync(url, toJson = true) {
+    return this.sendRequest(this.HTTP_METHODS.GET, url, null, toJson);
   }
 
-  put(url, body, onSuccess, onFail = null, toJson = true) {
-    this.sendRequest(this.HTTP_METHODS.PUT, url, body, onSuccess, onFail, toJson);
+  async putAsync(url, body, toJson = true) {
+    return this.sendRequest(this.HTTP_METHODS.PUT, url, body, toJson);
   }
 
-  delete(url, onSuccess, onFail = null, toJson = true) {
-    this.sendRequest(this.HTTP_METHODS.DELETE, url, null, onSuccess, onFail, toJson);
+  async deleteAsync(url, toJson = true) {
+    return this.sendRequest(this.HTTP_METHODS.DELETE, url, null, toJson);
   }
 
-  sendRequest(method, url, body, onSuccess, onFail = null, toJson = true) {
-    let xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4) {
+  sendRequest(method, url, body, toJson = true) {
+    return new Promise(function (resolve, reject) {
+      var req = new XMLHttpRequest();
+      req.open(method, url);
+      req.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+      req.onload = function () {
         let response = null;
         if (toJson) {
-          response = JSON.parse(this.responseText);
+          response = JSON.parse(this.response);
         } else {
-          response = this.responseText;
+          response = this.response;
         }
-        if (this.status === 200) {
-          onSuccess(response);
-        } else if (onFail) {
-          onFail(response);
+        if (req.status === 200) {
+          resolve(response);
+        } else {
+          reject(response);
         }
+      };
+      req.onerror = function () {
+        reject(Error("Network Error"));
+      }; 
+      let requestBody = null;
+      if (body) {
+        requestBody = JSON.stringify(body);
       }
-    };
-    xhttp.open(method, url, true);
-    xhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
-    let requestBody = null;
-    if (body) {
-      requestBody = JSON.stringify(body);
-    }
-    xhttp.send(requestBody);
-  }
+      req.send(requestBody);
+    });
+  };
 
   createUrl(baseUrl, route) {
     let url = `${baseUrl}/${route}`;
@@ -83,21 +86,21 @@ class TemplatesManager{
     this._communication = communicationManager;
     this._templates = {};
   }
-  getTemplate(path, onSuccess, jsonForMustache) {
+
+  async getTemplate(path, jsonForMustache) {
     const template = this._templates[path];
     if (template) {
-      onSuccess(template);
-      return;
+      return template;
     }
-    this._communication.get(path, (template) => {
-      if (jsonForMustache) {
-        var html = mustache.render(template, jsonForMustache);
-        this._templates[path] = html;
-        onSuccess(html);
-      } else {
-        this._templates[path] = template;
-        onSuccess(template);
-      }
-    }, null, false);
+    let response = await this._communication.getAsync(path, false);
+
+    if (jsonForMustache) {
+      var html = mustache.render(response, jsonForMustache);
+      this._templates[path] = html;
+      return html;
+    } else {
+      this._templates[path] = response;
+      return response;
+    }
   }
 }

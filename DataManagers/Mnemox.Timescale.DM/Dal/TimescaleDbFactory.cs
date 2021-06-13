@@ -4,21 +4,25 @@ namespace Mnemox.Timescale.DM.Dal
 {
     public class TimescaleDbFactory : IDbFactory
     {
-        private readonly DbFactorySettings _factorySettings;
+        private readonly ISettingsManager _settingsManager;
 
-        public TimescaleDbFactory(DbFactorySettings factorySettings)
+        private readonly DbFactorySettings _dbFactorySettings;
+
+        public TimescaleDbFactory(ISettingsManager settingsManager)
         {
-            _factorySettings = factorySettings;
+            _settingsManager = settingsManager;
+
+            _dbFactorySettings = _settingsManager.FullSettings.DbFactorySettings;
         }
 
         public IDbBase GetDbBase(string connectionString = null)
         {
-            return new DbBase(connectionString ?? _factorySettings.ConnectionString);
+            return new DbBase(connectionString ?? _dbFactorySettings.ConnectionString);
         }
 
         public string CreateConnectionString(string databaseAddress, string username, string password, int? port = 5432, string database = "mnemox")
         {
-            var connectionString = string.Format(_factorySettings.ConnectionStringTemplate, databaseAddress, port, username, password, database);
+            var connectionString = string.Format(_dbFactorySettings.ConnectionStringTemplate, databaseAddress, port, username, password, database);
 
             return connectionString;
         }

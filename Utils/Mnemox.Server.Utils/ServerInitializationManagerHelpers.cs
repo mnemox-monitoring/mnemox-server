@@ -37,7 +37,7 @@ namespace Mnemox.Server.Utils
 
             _apiConfiguration.Configuration.GetSection(DATABASE_FACTORY_SETTINGS_SECTION_NAME).Bind(dbFactorySettings);
 
-            _apiConfiguration.Services.AddTransient<IDbFactory>(c => new TimescaleDbFactory(dbFactorySettings));
+            _apiConfiguration.Services.AddTransient<IDbFactory, TimescaleDbFactory>();
 
             _apiConfiguration.Services.AddTransient<IHeartBeatDataManager, HeartBeatDataManagerTs>();
 
@@ -58,6 +58,8 @@ namespace Mnemox.Server.Utils
             _apiConfiguration.Services.AddTransient<IDataStorageInfrastructureManager, TimescaleInfrastructure>();
 
             _apiConfiguration.Services.AddTransient<ITimescaleInfrastructureHelpers, TimescaleInfrastructureHelpers>();
+
+            _apiConfiguration.Services.AddSingleton<IServersManager, ServersManagerTs>();
         }
 
         public string GetDatabaseType()
