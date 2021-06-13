@@ -1,0 +1,9 @@
+﻿const CONSTANTS = {
+  API_URL: "http://localhost:19255",
+  IS_INITIALIZED: false,
+  SERVER_INITIALIZATION_STATES:
+  {
+    DATABASE_INITIALIZED: 1,
+    OWNER_USER_INITIALIZAD: 2
+  }
+};

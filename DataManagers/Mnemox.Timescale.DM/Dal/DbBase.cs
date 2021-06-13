@@ -26,7 +26,10 @@ namespace Mnemox.Timescale.DM.Dal
 
         public async Task DisconnectAsync()
         {
-            await _connection?.CloseAsync();
+            if (_connection != null)
+            {
+                await _connection.CloseAsync();
+            }
         }
 
         public async Task<DbDataReader> ExecuteReaderFunctionAsync(string command, List<TimescaleParameter> parameters = null)

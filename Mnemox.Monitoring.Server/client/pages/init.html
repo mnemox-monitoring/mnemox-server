@@ -26,14 +26,29 @@
 </div>
 
 <div class="center small-form display-none" id="divServerDetails">
+  <div id="divExistingServerSection">
+    <div class="field-header">{{language.existingServer}}</div>
+    <div class="form-item">
+      <select id="selExistingServer" class="full-length-select" onchange="mnemoxClient._serverInitializer.serverSelectionChanged()">
+        <option></option>
+      </select>
+    </div>
+  </div>
   <div class="field-header">{{language.serverName}}</div>
   <div class="form-item"><input type="text" id="txtServerName" class="full-length" placeholder="{{language.name}}" /></div>
   <div class="field-header">{{language.serverPort}}</div>
-  <div class="form-item"><input type="number" id="txtServerPort" class="full-length" placeholder="{{language.port}}" /></div>
-
+  <div class="form-item"><input type="number" id="txtServerPort" class="full-length" placeholder="{{language.port}}" disabled="disabled"/>
+  </div>
   <div class="form-item">
     <div class="button float" onclick="mnemoxClient._serverInitializer.backTo('database')">{{language.previous}}</div>
-    <div class="button oposit-float" onclick="mnemoxClient._serverInitializer.validateServerName()">{{language.next}}</div>
+    <div class="button oposit-float" onclick="mnemoxClient._serverInitializer.initServerDetails()">
+      <span id="spnBtnServerNextCaption">
+        {{language.next}}
+      </span>
+      <span id="spnBtnServerNextLoad" class="display-none">
+        <img src="/client/images/dots-loader.gif" class="dots-loader" />
+      </span>
+    </div>
   </div>
   <div class="clear-both"></div>
 </div>

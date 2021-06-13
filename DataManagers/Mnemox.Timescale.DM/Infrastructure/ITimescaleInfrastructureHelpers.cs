@@ -8,10 +8,10 @@ namespace Mnemox.Timescale.DM.Infrastructure
     {
         Task CreateExtension(IDbBase dbBase, string extensionName, string schema);
         Task CreateSchema(IDbBase dbBase, string schemaName);
-        Task<DatabaseStatesEnums> DatabaseInitializationState(IDbBase dbBase);
-        Task DatabaseStateSet(IDbBase dbBase, DatabaseStatesEnums databaseState);
+        Task<InitializationStatesEnums> InitializationState(IDbBase dbBase);
         Task DropSchema(IDbBase dbBase, string schema);
         string LoadFile(string path);
         Task RunNonQuery(IDbBase dbBase, string query);
+        void ReInitConnectionString(InfrastructureSettings infrastructureSettings);
     }
 }

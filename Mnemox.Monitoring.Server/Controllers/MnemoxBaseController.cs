@@ -10,9 +10,11 @@ namespace Mnemox.Monitoring.Server.Controllers
     public class MnemoxBaseController : ControllerBase
     {
         [NonAction]
-        protected ObjectResult InternalServerErrorResult()
+        protected ObjectResult InternalServerErrorResult(string message = null)
         {
-            return StatusCode(StatusCodes.Status500InternalServerError, CreateErrorDescription(MnemoxStatusCodes.INTERNAL_SERVER_ERROR));
+            return StatusCode(
+                StatusCodes.Status500InternalServerError, 
+                CreateErrorDescription(MnemoxStatusCodes.INTERNAL_SERVER_ERROR, message ?? "Internal server error"));
         }
 
         [NonAction]

@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using Mnemox.Shared.Models.Enums;
+using System.Threading.Tasks;
 
 namespace Mnemox.DataStorage.Models
 {
     public interface IDataStorageInfrastructureManager
     {
-        Task InitializeDataStorage(dynamic settings);
+        Task<InitializationStatesEnums> InitializeDataStorage(dynamic settings);
     }
 }

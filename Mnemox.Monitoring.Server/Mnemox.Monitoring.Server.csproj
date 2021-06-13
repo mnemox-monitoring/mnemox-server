@@ -82,7 +82,7 @@
     <None Update="client\js\ui-helpers.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="client\js\variables.js">
+    <None Update="client\js\constants.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="client\pages\init.html">

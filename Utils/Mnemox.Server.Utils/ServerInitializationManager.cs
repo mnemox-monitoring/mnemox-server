@@ -48,12 +48,7 @@ namespace Mnemox.Server.Utils
 
             _apiConfiguration.Services.AddTransient<TenantContextValidationFilter>();
 
-            var databaseTypeName = _serverInitializationManagerHelpers.GetDatabaseType();
-
-            if (databaseTypeName == DatabasesConsts.TIMESCALEDB)
-            {
-                _serverInitializationManagerHelpers.SetTimescaleDataManagerTs();
-            }
+            _serverInitializationManagerHelpers.SetTimescaleDataManagerTs();
         }
     }
 }

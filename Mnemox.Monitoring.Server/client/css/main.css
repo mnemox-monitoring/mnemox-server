@@ -17,6 +17,12 @@ input[type="text"], input[type="password"], input[type="number"] {
   border-bottom: var(--input-fields-bottom-border);
 }
 
+select {
+  padding: var(--input-fields-padding);
+  border: none;
+  border-bottom: var(--input-fields-bottom-border);
+}
+
 .button {
   background-color: #5194aa;
   border: none;
@@ -49,6 +55,10 @@ input[type="text"], input[type="password"], input[type="number"] {
 
 .full-length{
   width:98%;
+}
+
+.full-length-select {
+  width: 100%;
 }
 
 .form-item{

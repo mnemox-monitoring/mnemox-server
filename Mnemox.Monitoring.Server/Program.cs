@@ -19,6 +19,8 @@ namespace Mnemox.Monitoring.Server
                 {
                     config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile("mnemox-server-settings.json", optional: false, reloadOnChange: true);
+                    config.AddJsonFile("hostsettings.json", optional: false);
+                    config.AddCommandLine(args);
                     config.AddEnvironmentVariables();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>

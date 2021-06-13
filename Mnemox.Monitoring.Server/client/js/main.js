@@ -14,15 +14,14 @@
     this._serverInitializer = new ServerInitialization(this._textHelpers, this._uiHelpers, this._communication);
   }
 
-  init() {
-    const url = this._communication.createUrl(VARIABLES.API_URL, API_ROUTES.SERVER.INIT_STATUS);
-    this._communication.get(url, (response) => {
-      if (!response.isInitialized) {
-        router.navigateTo(CLIENT_ROUTES.INIT_PAGE);
-      } else {
-        router.navigateTo(CLIENT_ROUTES.SIGNIN_PAGE);
-      }
-    });
+  async init() {
+    const url = this._communication.createUrl(CONSTANTS.API_URL, API_ROUTES.SERVER.INIT_STATUS);
+    let response = await this._communication.getAsync(url);
+    if (!response.isInitialized) {
+      router.navigateTo(CLIENT_ROUTES.INIT_PAGE);
+    } else {
+      router.navigateTo(CLIENT_ROUTES.SIGNIN_PAGE);
+    }
   }
 }
 

@@ -20,6 +20,9 @@
       case "CANNOT_SET_DATABASE_STATE_PARAMETER":
         errorText = LANGUAGE.cannotSetDatabaseStateParameter
         break;
+      case "INTERNAL_SERVER_ERROR":
+        errorText = LANGUAGE.internalServerError
+        break;
       default:
         errorText = LANGUAGE.systemError;
         break;
