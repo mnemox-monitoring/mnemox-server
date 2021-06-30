@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Mnemox.Account.Models;
+using Mnemox.Account.Models.Enums;
 using Mnemox.DataStorage.Models;
 using Mnemox.Logs.Models;
 using Mnemox.Shared.Models;
@@ -29,6 +31,8 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
 
         private readonly IServersManager _serversManager;
 
+        private readonly IUsersDataManager _usersDataManager;
+
         private const string SERVER_INITIALIZED_ALREADY = "Server initialized already";
 
         private const string INVALID_DATABASE_DETAILS = "Invalid database details all fields are mandatory";
@@ -42,7 +46,8 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
             IServerSettings serverSettings,
             IDbFactory dbFactory,
             IDataStorageInfrastructureManager dataStorageInfrastructureManager,
-            IServersManager serversManager)
+            IServersManager serversManager,
+            IUsersDataManager usersDataManager)
         {
             _logsManager = logsManager;
 
@@ -53,6 +58,8 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
             _dataStorageInfrastructureManager = dataStorageInfrastructureManager;
 
             _serversManager = serversManager;
+
+            _usersDataManager = usersDataManager;
         }
 
         /// <summary>
@@ -217,7 +224,12 @@ namespace Mnemox.Monitoring.Server.Controllers.Server
                         );
                 }
 
-                return Ok(new { serverId = server.ServerId, serverState = server.ServerState });
+                var systemOwner = await _usersDataManager.GetUsersByRole(RolesEnum.SystemOwner);
+
+                return Ok(new { 
+                    serverId = server.ServerId, 
+                    serverState = server.ServerState, 
+                    systemOwnerExists = systemOwner != null });
             }
             catch (OutputException ex)
             {

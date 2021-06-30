@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Mnemox.Timescale.Models;
+using System;
 using System.Data.Common;
 
 namespace Mnemox.Timescale.DM
@@ -31,6 +32,20 @@ namespace Mnemox.Timescale.DM
             var item = dbDataReader[itemName];
 
             return item is DBNull ? null : Convert.ToDateTime(item);
+        }
+
+        public string CreateSelectPropertyName(string propertyName)
+        {
+            var tsPropertyName = $"{ConstantsTs.SELECT_PROPERTY_PREFIX}{propertyName}";
+
+            return tsPropertyName;
+        }
+
+        public string CreateParameterName(string parameterName)
+        {
+            var tsParameterName = $"{ConstantsTs.FUNCTION_PARAMETER_PREFIX}{parameterName}";
+
+            return tsParameterName;
         }
     }
 }

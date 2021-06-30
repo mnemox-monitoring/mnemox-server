@@ -26,5 +26,10 @@
   existingServer: "Select the server if exists already (only inactive)",
   internalServerError: "Internal server error",
   databaseInitMandatoryFields: "Address, username and password fields are mandatory!",
-  serverInitMandatoryFields: "Name is mandatory field"
+  serverInitMandatoryFields: "Name is mandatory field",
+  firstName: "Firts name",
+  lastName: "Last name",
+  userName: "User name",
+  create: "Create",
+  confirmPassword: "Confirm password"
 }
