@@ -85,8 +85,14 @@
     <None Update="client\js\constants.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="client\pages\create-owner-user.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="client\pages\init.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="client\pages\user-base-details.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Files\Database\Timescaledb\core-tables-and-functions-initialization.sql">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>

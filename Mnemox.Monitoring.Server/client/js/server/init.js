@@ -69,15 +69,21 @@
     this._uiHelpers.switchElements(this.SERVER_NEXT_BUTTON_CAPTION_ID, this.SERVER_NEXT_BUTTON_LOADER_ID);
     try {
       const response = await this._communication.postAsync(url, request);
-      //this._uiHelpers.switchElements(this.DATABASE_DETAILS_ID, this.SERVER_DETAILS_ID);
-      this._uiHelpers.switchElements(this.DB_NEXT_BUTTON_LOADER_ID, this.DB_NEXT_BUTTON_CAPTION_ID);
-      //this.selectStoryItem(this.SERVER_DETAILS_STORY_ID);
+      if (response.systemOwnerExists) {
+        ///
+      } else {
+        router.navigateTo(`${CLIENT_ROUTES.CREATE_INITIAL_USER_PAGE}/${response.serverId}`);
+      }
     } catch (e) {
       const errorText = `${this._textHelpers.errorCodeToText(e.errorCode)}. <br/> ${LANGUAGE.responseError}: ${e.message}`;
       this._uiHelpers.alert(errorText, { duration: this.ERROR_DURATION_MS });
       this._uiHelpers.switchElements(this.DB_NEXT_BUTTON_LOADER_ID, this.DB_NEXT_BUTTON_CAPTION_ID);
       console.log(JSON.stringify(e));
     }
+  }
+
+  createOwnerUser() {
+
   }
 
   gotToSection(gotTo) {

@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Server.Utils", "Util
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.DataStorage.Models", "Models\Mnemox.DataStorage.Models\Mnemox.DataStorage.Models.csproj", "{02EC4240-5C27-4778-9506-31F6DE62F0FD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mnemox.Timescale.Models", "Models\Mnemox.Timescale.Models\Mnemox.Timescale.Models.csproj", "{3CE67691-543C-4F18-BB58-24233CE6A828}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -119,6 +121,10 @@ Global
 		{02EC4240-5C27-4778-9506-31F6DE62F0FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{02EC4240-5C27-4778-9506-31F6DE62F0FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{02EC4240-5C27-4778-9506-31F6DE62F0FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3CE67691-543C-4F18-BB58-24233CE6A828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3CE67691-543C-4F18-BB58-24233CE6A828}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3CE67691-543C-4F18-BB58-24233CE6A828}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3CE67691-543C-4F18-BB58-24233CE6A828}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -139,6 +145,7 @@ Global
 		{591EE194-C58C-40BC-BA1D-59A23F309D84} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
 		{17FD4A73-8293-4CCB-A782-ACB420EB77F5} = {CA1F9F1B-CC80-430D-A126-2CE594082CE0}
 		{02EC4240-5C27-4778-9506-31F6DE62F0FD} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
+		{3CE67691-543C-4F18-BB58-24233CE6A828} = {DA28FA31-714C-4FF7-8D49-D1D5D85AEA50}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {DA48D926-96AE-428E-8E1C-F85A185D05CD}

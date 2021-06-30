@@ -43,6 +43,14 @@ create table if not exists tenants.users (
 );
 
 
+create table if not exists tenants.users_roles (
+	users_roles_id bigserial NOT NULL,
+	role_id int2 NULL,
+	user_id int8 NULL,
+	CONSTRAINT users_roles_pk PRIMARY KEY (users_roles_id)
+);
+
+
 create table if not exists tenants.tokens (
 	token_id bigserial not null,
 	"token" character varying(500) not null,
@@ -285,3 +293,23 @@ begin
 
 end;
 $function$;
+
+drop function if exists tenants.users_get_by_role(smallint);
+create or replace function tenants.users_get_by_role(p_role_id smallint)
+ returns table(o_user_id bigint, o_username character varying(255), o_email character varying(255), 
+ 	o_first_name character varying(255), o_last_name character varying(255))
+ language plpgsql
+as $function$
+begin
+
+	return query
+	select u.user_id, u.username, u.email, u.first_name, u.last_name from tenants.users u
+	inner join tenants.users_roles ur on ur.user_id = u.user_id where ur.role_id = p_role_id;
+
+end;
+$function$;
+
+/*
+select * from server.servers;  
+delete from "server".servers; 
+*/

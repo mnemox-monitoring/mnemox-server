@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Mnemox.Account.Models;
+using Mnemox.Account.Models.Enums;
 using Mnemox.Logs.Models;
 using Mnemox.Security.Utils;
 using Mnemox.Shared.Models;
 using Mnemox.Shared.Models.Enums;
 using Mnemox.Timescale.DM.Dal;
+using Mnemox.Timescale.Models;
 using NpgsqlTypes;
 using System;
 using System.Collections.Generic;
@@ -22,6 +24,8 @@ namespace Mnemox.Timescale.DM.Account
 
         private const short TOKEN_VALID_MINUTES = 60;
         private const string INVALID_USERNAME_OR_PASSWORD = "Invalid username or password";
+
+        private const string GET_USERS_BY_ROLE_FNC_NAME = "tenants.users_get_by_role";
 
         public UsersDataManagerTs(
             ILogsManager logsManager, 
@@ -82,6 +86,65 @@ namespace Mnemox.Timescale.DM.Account
             }
         }
 
-        
+        public async Task<List<User>> GetUsersByRole(RolesEnum rolesEnum)
+        {
+            IDbBase dbBase = null;
+
+            List<User> users = null;
+
+            try
+            {
+                var parameters = new List<TimescaleParameter>
+                {
+                    new TimescaleParameter
+                    {
+                        NpgsqlValue = (short)rolesEnum,
+                        ParameterName = _dataManagersHelpers.CreateParameterName(ConstantsTs.ROLE_ID),
+                        NpgsqlDbType = NpgsqlDbType.Smallint
+                    }
+                };
+
+                dbBase = _dbFactory.GetDbBase();
+
+                await dbBase.ConnectAsync();
+
+                using (var reader = await dbBase.ExecuteReaderFunctionAsync(GET_USERS_BY_ROLE_FNC_NAME, parameters))
+                {
+                    if (reader.HasRows)
+                    {
+                        users = new List<User>();
+
+                        while (reader.Read())
+                        {
+                            var email = reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.EMAIL)];
+                            var firstName = reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.FIRST_NAME)];
+                            var lastName = reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.LAST_NAME)];
+
+                            users.Add( 
+                                new User
+                                {
+                                    UserId = Convert.ToInt64(_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.USER_ID)),
+                                    Email = email is DBNull ? null : email.ToString(),
+                                    FirstName = firstName is DBNull ? null : firstName.ToString(),
+                                    LastName = lastName is DBNull ? null : lastName.ToString()
+                                }
+                            );
+                        }
+                    }
+                }
+
+                return users;
+            }
+            catch (Exception ex)
+            {
+                await _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
+
+                throw new HandledException(ex);
+            }
+            finally
+            {
+                await dbBase?.DisconnectAsync();
+            }
+        }
     }
 }
