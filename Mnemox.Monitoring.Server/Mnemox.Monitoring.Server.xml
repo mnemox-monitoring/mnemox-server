@@ -4,6 +4,12 @@
         <name>Mnemox.Monitoring.Server</name>
     </assembly>
     <members>
+        <member name="M:Mnemox.Monitoring.Server.Controllers.Account.AccountController.OwnerSignUp(Mnemox.Account.Models.UserSignUp)">
+            <summary>
+            Sign up owner user
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Mnemox.Monitoring.Server.Controllers.Account.AuthController.SignIn(Mnemox.Account.Models.AuthRequest)">
             <summary>
             Sign-in into Mnemox Monitoring Server

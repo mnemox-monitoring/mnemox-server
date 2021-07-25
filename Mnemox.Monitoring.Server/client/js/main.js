@@ -10,8 +10,9 @@
       position: 'top|right'
     });
     this._textHelpers = new TextHelpers();
-    this._uiHelpers = new UiHelpers(this._toast);
-    this._serverInitializer = new ServerInitialization(this._textHelpers, this._uiHelpers, this._communication);
+    this._uiHelpers = new UiHelpers(this._toast, this._textHelpers);
+    this._serverInitializer = new ServerInitialization(this._uiHelpers, this._communication);
+    this._account = new Account(this._uiHelpers, this._communication);
   }
 
   async init() {

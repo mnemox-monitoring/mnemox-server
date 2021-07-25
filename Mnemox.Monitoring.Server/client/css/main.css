@@ -3,7 +3,7 @@
   --forms-background-color: #FFFFFF;
   --input-fields-padding: 5px;
   --input-fields-bottom-border: #e9e4e4 1px solid;
-  --small-form-max-width: 500px;
+  --small-form-width: 500px;
   --rounded-corner-size: 5px;
 }
 
@@ -40,10 +40,19 @@ select {
   margin:auto;
 }
 
+.small-form-header {
+  width: var(--small-form-width);
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 6px;
+  margin-left: 15px;
+}
+
 .small-form {
   padding: 15px;
   border: var(--forms-border-color);
-  max-width: var(--small-form-max-width);
+  width: var(--small-form-width);
   background-color: var(--forms-background-color);
   border-radius: var(--rounded-corner-size);
   box-sizing: border-box;
@@ -93,7 +102,7 @@ select {
 }
 
 .story {
-  max-width: var(--small-form-max-width);
+  width: var(--small-form-width);
   margin-top: 20px;
   margin-bottom: 20px;
   display: grid;
@@ -109,3 +118,9 @@ select {
   height:8px;
 }
 
+.screen-center {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}

@@ -12,6 +12,8 @@ using Mnemox.Api.Security.Utils;
 using Mnemox.Shared.Models.Settings;
 using Mnemox.Web.Utils;
 using Mnemox.Server.Utils;
+using Mnemox.Account.Models;
+using Mnemox.Timescale.DM.Account;
 
 namespace Mnemox.Monitoring.Server
 {
@@ -72,6 +74,10 @@ namespace Mnemox.Monitoring.Server
             services.AddTransient<IWebFilesManagerHelpers, WebFilesManagerHelpers>();
 
             services.AddTransient<IWebFilesManager, WebFilesManager>();
+
+            services.AddTransient<IUserRolesManager, UserRolesManagerTs>();
+
+            services.AddTransient<IUsersDataManager, UsersDataManagerTs>();
 
             services.AddSwaggerGen(c =>
             {

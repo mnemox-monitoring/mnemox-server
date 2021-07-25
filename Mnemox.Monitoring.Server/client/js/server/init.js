@@ -1,6 +1,6 @@
 ﻿class ServerInitialization {
   
-  constructor(textHelpers, uiHelpers, communication) {
+  constructor(uiHelpers, communication) {
     this.DATABASE = "database";
     this.DATABASE_DETAILS_ID = "divDatabaseDetails";
     this.SERVER_DETAILS_ID = "divServerDetails";
@@ -12,7 +12,6 @@
     this.SERVER_NEXT_BUTTON_CAPTION_ID = "spnBtnServerNextCaption";
     this.SERVER_NEXT_BUTTON_LOADER_ID = "spnBtnServerNextLoad";
 
-    this._textHelpers = textHelpers;
     this._uiHelpers = uiHelpers;
     this._communication = communication;
   }
@@ -45,8 +44,7 @@
       }
       this.gotToSection(response.serverInitializationState);
     } catch (e) {
-      const errorText = `${this._textHelpers.errorCodeToText(e.errorCode)}. <br/> ${LANGUAGE.responseError}: ${e.message}`;
-      this._uiHelpers.alert(errorText, { duration: this.ERROR_DURATION_MS });
+      this._uiHelpers.alert(this._uiHelpers.createAlertText(e), { duration: this.ERROR_DURATION_MS });
       this._uiHelpers.switchElements(this.DB_NEXT_BUTTON_LOADER_ID, this.DB_NEXT_BUTTON_CAPTION_ID);
       console.log(JSON.stringify(e));
     }
@@ -70,20 +68,45 @@
     try {
       const response = await this._communication.postAsync(url, request);
       if (response.systemOwnerExists) {
-        ///
+        router.navigateTo(CLIENT_ROUTES.SIGN_IN_PAGE);
       } else {
         router.navigateTo(`${CLIENT_ROUTES.CREATE_INITIAL_USER_PAGE}/${response.serverId}`);
       }
     } catch (e) {
-      const errorText = `${this._textHelpers.errorCodeToText(e.errorCode)}. <br/> ${LANGUAGE.responseError}: ${e.message}`;
-      this._uiHelpers.alert(errorText, { duration: this.ERROR_DURATION_MS });
+      this._uiHelpers.alert(this._uiHelpers.createAlertText(e), { duration: this.ERROR_DURATION_MS });
       this._uiHelpers.switchElements(this.DB_NEXT_BUTTON_LOADER_ID, this.DB_NEXT_BUTTON_CAPTION_ID);
       console.log(JSON.stringify(e));
     }
   }
 
-  createOwnerUser() {
-
+  async createOwnerUser() {
+    const firstName = document.getElementById("txtFirstName").value;
+    const lastName = document.getElementById("txtLastName").value;
+    const userName = document.getElementById("txtUserName").value;
+    const password = document.getElementById("txtPassword").value;
+    const confirmPassword = document.getElementById("txtConfirmPassword").value;
+    if (!firstName || !lastName || !userName || !password || !confirmPassword) {
+      this._uiHelpers.alert(LANGUAGE.allFieldsMandatory);
+      return;
+    }
+    if (password !== confirmPassword) {
+      this._uiHelpers.alert(LANGUAGE.passwordConfirmFail);
+      return;
+    }
+    var request = {
+      firstName: firstName,
+      lastName: lastName,
+      userName: userName,
+      password: password
+    };
+    const url = this._communication.createUrl(CONSTANTS.API_URL, API_ROUTES.ACCOUNT.OWNER);
+    try {
+      const response = await this._communication.postAsync(url, request);
+      router.navigateTo(`${CLIENT_ROUTES.SIGN_IN_PAGE}`);
+    } catch (e) {
+      this._uiHelpers.alert(this._uiHelpers.createAlertText(e), { duration: this.ERROR_DURATION_MS });
+      console.log(JSON.stringify(e));
+    }
   }
 
   gotToSection(gotTo) {

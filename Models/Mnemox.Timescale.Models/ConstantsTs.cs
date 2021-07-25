@@ -9,5 +9,7 @@
         public const string LAST_NAME = "last_name";
         public const string USER_ID = "user_id";
         public const string ROLE_ID = "role_id";
+        public const string USERNAME = "username";
+        public const string PASSWORD = "password";
     }
 }

@@ -35,11 +35,11 @@ create table if not exists tenants.users (
 	user_id bigserial,
 	username character varying(255) not null,
 	password character varying(255) not null,
-	email character varying(255) null,
 	first_name character varying(255) null,
 	last_name character varying(255) null,
 	insert_date_time_utc timestamp(0) null default timezone('utc'::text, now()),
-	constraint users_pk primary key (user_id)
+	constraint users_pk primary key (user_id),
+	unique(username)
 );
 
 
@@ -106,7 +106,6 @@ $function$;
 create or replace function tenants.users_add(
 	p_username character varying(255),
 	p_password character varying(255),
-	p_email character varying(255),
 	p_first_name character varying(255),
 	p_last_name character varying(255))
  returns bigint
@@ -115,14 +114,29 @@ as $function$
 	declare o_user_id bigint;
 begin
 
-	insert into tenants.users(username, password, email, first_name, last_name)
-	values(p_username, tenants.crypt(p_password, tenants.gen_salt('bf', 8)), p_email, p_first_name, p_last_name)
+	insert into tenants.users(username, password, first_name, last_name)
+	values(p_username, tenants.crypt(p_password, tenants.gen_salt('bf', 8)), p_first_name, p_last_name)
 	returning user_id into o_user_id;
 
 	return o_user_id;
 
 end;
 $function$;
+
+
+CREATE OR REPLACE FUNCTION tenants.users_roles_add(p_user_id bigint, p_role_id smallint)
+ RETURNS void
+ LANGUAGE plpgsql
+AS $function$
+begin
+
+	insert into tenants.users_roles(user_id, role_id)
+	values(p_user_id, p_role_id);
+
+end;
+$function$
+;
+
 
 create or replace function tenants.users_authenticate(
 	p_username character varying(255),
@@ -296,14 +310,14 @@ $function$;
 
 drop function if exists tenants.users_get_by_role(smallint);
 create or replace function tenants.users_get_by_role(p_role_id smallint)
- returns table(o_user_id bigint, o_username character varying(255), o_email character varying(255), 
+ returns table(o_user_id bigint, o_username character varying(255), 
  	o_first_name character varying(255), o_last_name character varying(255))
  language plpgsql
 as $function$
 begin
 
 	return query
-	select u.user_id, u.username, u.email, u.first_name, u.last_name from tenants.users u
+	select u.user_id, u.username, u.first_name, u.last_name from tenants.users u
 	inner join tenants.users_roles ur on ur.user_id = u.user_id where ur.role_id = p_role_id;
 
 end;
