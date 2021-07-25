@@ -58,6 +58,9 @@
     <None Update="client\images\dots-loader.gif">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="client\js\account\account.js">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="client\js\infra.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -85,7 +88,10 @@
     <None Update="client\js\constants.js">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="client\pages\create-owner-user.html">
+    <None Update="client\pages\account\create-owner-user.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="client\pages\account\sign-in.html">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="client\pages\init.html">

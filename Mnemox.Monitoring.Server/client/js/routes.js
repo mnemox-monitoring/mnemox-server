@@ -4,20 +4,25 @@ const API_ROUTES = {
   SERVER: {
     INIT_STATUS: "server/init-status",
     VALIDATE_DATABASE: "server/validate/database",
-    INIT_SERVER_DETAILS: "server/init"
+    INIT_SERVER_DETAILS: "server/init",
+    ACCOUNT_RESOURCE: "account"
+  },
+  ACCOUNT: {
+    OWNER: "account/owner"
   }
 };
 
 const CLIENT_ROUTES = {
   INIT_PAGE: `/${DEFAULT_PAGE_ROUTE}/init`,
-  SIGNIN_PAGE: `/${DEFAULT_PAGE_ROUTE}/sign-in`,
-  CREATE_INITIAL_USER_PAGE: `/${DEFAULT_PAGE_ROUTE}/sign-up`
+  SIGN_IN_PAGE: `/${DEFAULT_PAGE_ROUTE}/sign-in`,
+  CREATE_INITIAL_USER_PAGE: `/${DEFAULT_PAGE_ROUTE}/account/owner/sign-up`
 };
 
 const TEMPLATES_ROUTES = {
   INIT_TEMPLATE: `/${DEFAULT_PAGE_ROUTE}/pages/init.html`,
   USER_BASE_DETAILS: `/${DEFAULT_PAGE_ROUTE}/pages/user-base-details.html`,
-  CREATE_OWNER_USER: `/${DEFAULT_PAGE_ROUTE}/pages/create-owner-user.html`,
+  CREATE_OWNER_USER: `/${DEFAULT_PAGE_ROUTE}/pages/account/create-owner-user.html`,
+  SIGN_IN_TEMPLATE: `/${DEFAULT_PAGE_ROUTE}/pages/account/sign-in.html`
 };
 
 let router = new Router({
@@ -42,6 +47,11 @@ router.add(`${CLIENT_ROUTES.CREATE_INITIAL_USER_PAGE}/{serverId}`, async functio
   document.getElementById("main").innerHTML = createOwnerTemplate;
   document.getElementById("createOwnerUserContent").innerHTML = baseUserTemplate;
   document.getElementById("hidServerId").value = serverId;
+});
+
+router.add(`${CLIENT_ROUTES.SIGN_IN_PAGE}`, async function () {
+  let template = await mnemoxClient._templatesManager.getTemplate(TEMPLATES_ROUTES.SIGN_IN_TEMPLATE, { language: LANGUAGE });
+  document.getElementById("main").innerHTML = template;
 });
 
 router.addUriListener();

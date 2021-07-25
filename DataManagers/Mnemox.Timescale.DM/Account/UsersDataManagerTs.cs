@@ -4,7 +4,6 @@ using Mnemox.Account.Models.Enums;
 using Mnemox.Logs.Models;
 using Mnemox.Security.Utils;
 using Mnemox.Shared.Models;
-using Mnemox.Shared.Models.Enums;
 using Mnemox.Timescale.DM.Dal;
 using Mnemox.Timescale.Models;
 using NpgsqlTypes;
@@ -26,6 +25,7 @@ namespace Mnemox.Timescale.DM.Account
         private const string INVALID_USERNAME_OR_PASSWORD = "Invalid username or password";
 
         private const string GET_USERS_BY_ROLE_FNC_NAME = "tenants.users_get_by_role";
+        private const string ADD_USER_FNC_NAME = "tenants.users_add";
 
         public UsersDataManagerTs(
             ILogsManager logsManager, 
@@ -116,15 +116,16 @@ namespace Mnemox.Timescale.DM.Account
 
                         while (reader.Read())
                         {
-                            var email = reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.EMAIL)];
+                            var userName = reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.USERNAME)];
                             var firstName = reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.FIRST_NAME)];
                             var lastName = reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.LAST_NAME)];
+                            var userId = Convert.ToInt64(reader[_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.USER_ID)]);
 
                             users.Add( 
                                 new User
                                 {
-                                    UserId = Convert.ToInt64(_dataManagersHelpers.CreateSelectPropertyName(ConstantsTs.USER_ID)),
-                                    Email = email is DBNull ? null : email.ToString(),
+                                    UserId = userId,
+                                    Username = userName is DBNull ? null : userName.ToString(),
                                     FirstName = firstName is DBNull ? null : firstName.ToString(),
                                     LastName = lastName is DBNull ? null : lastName.ToString()
                                 }
@@ -134,6 +135,61 @@ namespace Mnemox.Timescale.DM.Account
                 }
 
                 return users;
+            }
+            catch (Exception ex)
+            {
+                await _logsManager.ErrorAsync(new ErrorLogStructure(ex).WithErrorSource());
+
+                throw new HandledException(ex);
+            }
+            finally
+            {
+                await dbBase?.DisconnectAsync();
+            }
+        }
+
+
+        public async Task<long> CreateUser(UserSignUp createUserReques)
+        {
+            IDbBase dbBase = null;
+
+            try
+            {
+                var parameters = new List<TimescaleParameter>
+                {
+                    new TimescaleParameter
+                    {
+                        NpgsqlValue = createUserReques.FirstName,
+                        ParameterName = _dataManagersHelpers.CreateParameterName(ConstantsTs.USERNAME),
+                        NpgsqlDbType = NpgsqlDbType.Varchar
+                    },
+                    new TimescaleParameter
+                    {
+                        NpgsqlValue = createUserReques.Password,
+                        ParameterName = _dataManagersHelpers.CreateParameterName(ConstantsTs.PASSWORD),
+                        NpgsqlDbType = NpgsqlDbType.Varchar
+                    },
+                    new TimescaleParameter
+                    {
+                        NpgsqlValue = createUserReques.FirstName,
+                        ParameterName = _dataManagersHelpers.CreateParameterName(ConstantsTs.FIRST_NAME),
+                        NpgsqlDbType = NpgsqlDbType.Varchar
+                    },
+                    new TimescaleParameter
+                    {
+                        NpgsqlValue = createUserReques.LastName,
+                        ParameterName = _dataManagersHelpers.CreateParameterName(ConstantsTs.LAST_NAME),
+                        NpgsqlDbType = NpgsqlDbType.Varchar
+                    }
+                };
+
+                dbBase = _dbFactory.GetDbBase();
+
+                await dbBase.ConnectAsync();
+
+                var userId = (long)await dbBase.ExecuteScalarAsync(ADD_USER_FNC_NAME, parameters);
+
+                return userId;
             }
             catch (Exception ex)
             {

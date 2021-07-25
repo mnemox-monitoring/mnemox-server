@@ -27,9 +27,12 @@
   internalServerError: "Internal server error",
   databaseInitMandatoryFields: "Address, username and password fields are mandatory!",
   serverInitMandatoryFields: "Name is mandatory field",
+  allFieldsMandatory: "All fields are mandatory",
+  passwordConfirmFail: "Password and confirm password are not the same",
   firstName: "Firts name",
   lastName: "Last name",
   userName: "User name",
   create: "Create",
-  confirmPassword: "Confirm password"
+  confirmPassword: "Confirm password",
+  signIn: "Sign in"
 }
